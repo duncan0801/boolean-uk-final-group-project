@@ -1,0 +1,23 @@
+{
+  "name": "boolean-uk-groupproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duncan0801/boolean-uk-groupproject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duncan0801/boolean-uk-groupproject/issues"
+  },
+  "homepage": "https://github.com/duncan0801/boolean-uk-groupproject#readme",
+  "dependencies": {
+    "express-generator": "^4.16.1"
+  }
+}
