@@ -1,4 +1,4 @@
-import dbClient from "../../utils/database";
+import dbClient from "../../utils/dbClient";
 import { hash } from "bcrypt";
 
 export type NewUser = {

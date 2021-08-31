@@ -12,7 +12,7 @@ export const getUser = async (req: Request, res: Response) => {
     });
     res.json({ data: user });
   } catch (error) {
-    res.json({ error: error.message });
+    res.json({ error });
   }
 };
 
@@ -22,7 +22,7 @@ export const createUser = async (req: Request, res: Response) => {
     const savedUser = await userClient.createWithHash(newUser);
     res.json({ data: savedUser });
   } catch (error) {
-    res.json({ error: error.message });
+    res.json({ error });
   }
 };
 
