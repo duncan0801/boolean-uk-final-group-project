@@ -57,9 +57,10 @@ function generateCounsellor() {
 		hourlyRate,
 	};
 }
-function generateUserMessages(userId) {
+function generateUserMessagesAndAppointments(userId) {
 	const counsellorId = randomNumberGenerator(1, numberOfCounsellors);
 	let messages = [];
+    
 	for (const number of new Array(5)) {
 		messages.push({
 			userId: userId,
@@ -69,5 +70,41 @@ function generateUserMessages(userId) {
 		});
 	}
 
-	return messages;
+    const review = {
+        date: faker.date.recent(),
+        content: faker.lorem.paragraph(),
+        userId,
+        counsellorId
+    }
+
+    const appointment = {
+        userId,
+        counsellorId,
+        dateTime: faker.date.soon(),
+        booked: true
+    }
+
+	return{ messages, appointment, review};
+}
+function generateCouncillorAppointments() {
+    let appointments= []
+    for(let i=1; i <= numberOfCounsellors; i++) {
+        appointments.push({
+            councillorId: i,
+            dateTime: faker.date.soon(),
+            userId: null,
+            booked: false
+        })
+    }
+    return appointments
+}
+function generateFAQs() {
+    let FAQs = []
+    for(let i = 0; i < 10; i++) {
+        FAQs.push({
+            question: faker.lorem.sentence() + "?",
+            answer: faker.lorem.paragraph()
+        })
+    }
+    return FAQs
 }
