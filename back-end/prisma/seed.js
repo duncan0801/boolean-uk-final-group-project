@@ -1,5 +1,6 @@
 const faker = require("faker");
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
+const { PrismaClient } = require("@prisma/client");
 const seedingClient = new PrismaClient();
 
 const specialtiesList = [
@@ -35,6 +36,16 @@ function generateUser() {
 	const avatar = faker.image.avatar();
 	const userName = firstName + faker.random.number() + faker.random.number();
 	const password = faker.internet.password();
+	const counsellor_ID = randomNumberGenerator(1, 20);
+
+	return {
+		firstName,
+		lastName,
+		avatar,
+		userName,
+		password,
+		counsellor_ID,
+	};
 }
 function generateCounsellor() {
 	const firstName = faker.name.firstName();
@@ -59,34 +70,34 @@ function generateCounsellor() {
 		hourlyRate,
 	};
 }
-function generateUserMessagesAndAppointments(userId) {
-	const counsellorId = randomNumberGenerator(1, numberOfCounsellors);
+function generateUserMessagesAndAppointments(user_ID) {
+	const counsellor_ID = randomNumberGenerator(1, numberOfCounsellors);
 	let messages = [];
 
 	for (const number of new Array(5)) {
 		messages.push({
-			userId: userId,
-			counsellorId,
+			user_ID,
+			counsellor_ID,
 			date: faker.date.recent(),
 			content: faker.lorem.sentence(),
 		});
 	}
 
-	const review = {
+	const reviews = {
 		date: faker.date.recent(),
 		content: faker.lorem.paragraph(),
-		userId,
-		counsellorId,
+		user_ID,
+		counsellor_ID,
 	};
 
-	const appointment = {
-		userId,
-		counsellorId,
-		dateTime: faker.date.soon(),
-		booked: true,
+	const appointments = {
+		user_ID,
+		counsellor_ID,
+		date: faker.date.soon(),
+		time: faker.time.recent(),
 	};
 
-	return { messages, appointment, review };
+	return { messages, appointments, reviews };
 }
 function generateCouncillorAppointments() {
 	let appointments = [];
@@ -94,7 +105,7 @@ function generateCouncillorAppointments() {
 		appointments.push({
 			councillorId: i,
 			dateTime: faker.date.soon(),
-			userId: null,
+			user_ID: null,
 			booked: false,
 		});
 	}
@@ -111,8 +122,28 @@ function generateFAQs() {
 	return FAQs;
 }
 async function main() {
-	for (let i = 0; i < numberOfUsers; i++) {
-		const newUser = seedingClient.user
+	for (let i = 1; i <= numberOfUsers; i++) {
+		const user = generateUser();
+		const { messages, appointments, reviews } =
+			generateUserMessagesAndAppointments(i);
+
+		await seedingClient.user.create({
+			data: {
+				...user,
+				// messages: { create: { ...messages } },
+				// appointments: { create: { ...appointments } },
+				// reviews: { create: { ...reviews } },
+			},
+		});
+
+		for (let i = 1; i <= numberOfCounsellors; i++) {
+			const counsellor = generateCounsellor();
+			await seedingClient.counsellor.create({
+				data: {
+					...counsellor,
+				},
+			});
+		}
 	}
 }
 
