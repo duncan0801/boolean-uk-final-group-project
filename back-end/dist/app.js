@@ -20,7 +20,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
-//Routs
+//Routes
 app.use("/user", router_1.default);
 app.use("/counsellors", router_2.default);
 app.use("/messages", router_3.default);
