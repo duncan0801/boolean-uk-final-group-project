@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-//Routs
+//Routes
 app.use("/user", usersRouter);
 app.use("/counsellors", counsellorRouter);
 app.use("/messages", messagesRouter);

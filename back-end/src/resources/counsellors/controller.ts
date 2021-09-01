@@ -21,7 +21,6 @@ export const getCounsellors = async (req: Request, res: Response) => {
 
 export const getById = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
-
   try {
     const foundCounsellor = await dbClient.counsellor.findUnique({
       where: {
