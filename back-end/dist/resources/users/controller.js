@@ -12,8 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.createUser = exports.getUser = void 0;
+exports.updateUser = exports.createUser = exports.getUser = exports.getAllUsers = void 0;
 const service_1 = __importDefault(require("./service"));
+const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(req.params.id);
+    try {
+        const user = yield service_1.default.findMany();
+        res.json({ data: user });
+    }
+    catch (error) {
+        res.json({ error });
+    }
+});
+exports.getAllUsers = getAllUsers;
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     try {

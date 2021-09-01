@@ -53,11 +53,11 @@ function generateCounsellor() {
 	const avatar = faker.image.avatar();
 	const about = faker.lorem.paragraph();
 	const licensing = faker.lorem.words();
-	let specialties = [];
-	for (const number of new Array(5)) {
-		const randomNumber = randomNumberGenerator(0, 18);
-		specialties.push(specialtiesList[randomNumber]);
-	}
+	// let specialties = [];
+	// for (const number of new Array(5)) {
+	// 	const randomNumber = randomNumberGenerator(0, 18);
+	// 	specialties.push(specialtiesList[randomNumber]);
+	// }
 	const hourlyRate = hourlyRates[randomNumberGenerator(0, 4)];
 
 	return {
@@ -66,7 +66,7 @@ function generateCounsellor() {
 		avatar,
 		about,
 		licensing,
-		specialties,
+		// specialties,
 		hourlyRate,
 	};
 }
@@ -122,28 +122,33 @@ function generateFAQs() {
 	return FAQs;
 }
 async function main() {
-	for (let i = 1; i <= numberOfUsers; i++) {
-		const user = generateUser();
-		const { messages, appointments, reviews } =
-			generateUserMessagesAndAppointments(i);
+	// for (const specialty of specialtiesList) {
+	//     await seedingClient.service.create({
+	//         data: { name: specialty },
+	//     });
+	// }
 
-		await seedingClient.user.create({
+	// for (let i = 1; i <= numberOfUsers; i++) {
+	// 	const user = generateUser();
+	// 	const { messages, appointments, reviews } =
+	// 		generateUserMessagesAndAppointments(i);
+
+	// 	await seedingClient.user.create({
+	// 		data: {
+	// 			...user,
+	// 			// messages: { create: { ...messages } },
+	// 			// appointments: { create: { ...appointments } },
+	// 			// reviews: { create: { ...reviews } },
+	// 		},
+	// 	});
+	// }
+	for (let i = 1; i <= numberOfCounsellors; i++) {
+		const counsellor = generateCounsellor();
+		await seedingClient.counsellor.create({
 			data: {
-				...user,
-				// messages: { create: { ...messages } },
-				// appointments: { create: { ...appointments } },
-				// reviews: { create: { ...reviews } },
+				...counsellor,
 			},
 		});
-
-		for (let i = 1; i <= numberOfCounsellors; i++) {
-			const counsellor = generateCounsellor();
-			await seedingClient.counsellor.create({
-				data: {
-					...counsellor,
-				},
-			});
-		}
 	}
 }
 
