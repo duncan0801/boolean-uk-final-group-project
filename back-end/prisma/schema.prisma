@@ -65,7 +65,7 @@ model Review {
 
 model Message {
   id Int @id @default(autoincrement())
-  dateTime String
+  date DateTime @db.Date 
   content String
   user_ID Int
   counsellor_ID Int
