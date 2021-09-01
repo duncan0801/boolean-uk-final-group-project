@@ -1,4 +1,6 @@
 const faker = require("faker");
+import { PrismaClient } from "@prisma/client";
+const seedingClient = new PrismaClient();
 
 const specialtiesList = [
 	"Anxiety",
@@ -60,7 +62,7 @@ function generateCounsellor() {
 function generateUserMessagesAndAppointments(userId) {
 	const counsellorId = randomNumberGenerator(1, numberOfCounsellors);
 	let messages = [];
-    
+
 	for (const number of new Array(5)) {
 		messages.push({
 			userId: userId,
@@ -70,41 +72,55 @@ function generateUserMessagesAndAppointments(userId) {
 		});
 	}
 
-    const review = {
-        date: faker.date.recent(),
-        content: faker.lorem.paragraph(),
-        userId,
-        counsellorId
-    }
+	const review = {
+		date: faker.date.recent(),
+		content: faker.lorem.paragraph(),
+		userId,
+		counsellorId,
+	};
 
-    const appointment = {
-        userId,
-        counsellorId,
-        dateTime: faker.date.soon(),
-        booked: true
-    }
+	const appointment = {
+		userId,
+		counsellorId,
+		dateTime: faker.date.soon(),
+		booked: true,
+	};
 
-	return{ messages, appointment, review};
+	return { messages, appointment, review };
 }
 function generateCouncillorAppointments() {
-    let appointments= []
-    for(let i=1; i <= numberOfCounsellors; i++) {
-        appointments.push({
-            councillorId: i,
-            dateTime: faker.date.soon(),
-            userId: null,
-            booked: false
-        })
-    }
-    return appointments
+	let appointments = [];
+	for (let i = 1; i <= numberOfCounsellors; i++) {
+		appointments.push({
+			councillorId: i,
+			dateTime: faker.date.soon(),
+			userId: null,
+			booked: false,
+		});
+	}
+	return appointments;
 }
 function generateFAQs() {
-    let FAQs = []
-    for(let i = 0; i < 10; i++) {
-        FAQs.push({
-            question: faker.lorem.sentence() + "?",
-            answer: faker.lorem.paragraph()
-        })
-    }
-    return FAQs
+	let FAQs = [];
+	for (let i = 0; i < 10; i++) {
+		FAQs.push({
+			question: faker.lorem.sentence() + "?",
+			answer: faker.lorem.paragraph(),
+		});
+	}
+	return FAQs;
 }
+async function main() {
+	for (let i = 0; i < numberOfUsers; i++) {
+		const newUser = seedingClient.user
+	}
+}
+
+main()
+	.catch((e) => {
+		console.error(e);
+		process.exit(1);
+	})
+	.finally(async () => {
+		await seedingClient.$disconnect();
+	});
