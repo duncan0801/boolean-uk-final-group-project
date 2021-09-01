@@ -1,5 +1,11 @@
+import react from "react"
+
 function CounsellorCard() {
     return (
-        <h3></h3>
+        <div>
+            <h3>Jane Doe</h3>
+        </div>
     )
 }
+
+export default CounsellorCard
