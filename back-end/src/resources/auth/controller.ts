@@ -15,7 +15,7 @@ export const loginUser = async (req: Request, res: Response) => {
     // Create token, this will be the user Passport
     const token = createToken({
       id: loggedUser.id,
-    //   role: loggedUser.role,
+      //   role: loggedUser.role,
     });
 
     // This creates a cookie that can't be accessed by Javascript in the Frontend
@@ -24,7 +24,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     res.json({ data: { username: loggedUser.userName } });
   } catch (error) {
-    res.status(401).json({ error: error.message });
+    res.status(401).json({ error });
   }
 };
 

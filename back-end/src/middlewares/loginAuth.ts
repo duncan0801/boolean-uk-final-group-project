@@ -11,12 +11,12 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
   // const userData = token && validateToken(token);
 
-  if (userData) {
-    req.currentUser = userData;
-    next();
-  } else {
-    res
-      .status(401)
-      .json({ err: "You need to be logged in to access this data" });
-  }
+  // if (userData) {
+  //   req.currentUser = userData;
+  //   next();
+  // } else {
+  //   res
+  //     .status(401)
+  //     .json({ err: "You need to be logged in to access this data" });
+  // }
 };
