@@ -4,28 +4,29 @@ import { findUserWithValidation, findUnique } from "./service";
 import { createToken, validateToken } from "../../utils/authGenerator";
 
 export const loginUser = async (req: Request, res: Response) => {
-	//  Get user credentials
-	const userCreds: User = req.body;
 
-	try {
-		// Check if credentials are valid
-		const loggedUser = await findUserWithValidation(userCreds);
-		// handle result
+  //  Get user credentials
+  const userCreds: User = req.body;
 
-		// Create token, this will be the user Passport
-		const token = createToken({
-			id: loggedUser.id,
-			//   role: loggedUser.role,
-		});
+  try {
+    // Check if credentials are valid
+    const loggedUser = await findUserWithValidation(userCreds);
+    // handle result
 
-		// This creates a cookie that can't be accessed by Javascript in the Frontend
-		// httpOnly: true
-		res.cookie("token", token, { httpOnly: true });
+    // Create token, this will be the user Passport
+    const token = createToken({
+      id: loggedUser.id,
+      //   role: loggedUser.role,
+    });
 
-		res.json({ data: { username: loggedUser.userName } });
-	} catch (error) {
-		res.status(401).json({ error });
-	}
+    // This creates a cookie that can't be accessed by Javascript in the Frontend
+    // httpOnly: true
+    res.cookie("token", token, { httpOnly: true });
+
+    res.json({ data: { username: loggedUser.userName } });
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 export async function logoutUser(req: Request, res: Response) {
