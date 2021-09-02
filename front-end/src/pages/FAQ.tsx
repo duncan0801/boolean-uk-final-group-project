@@ -14,7 +14,9 @@ function QuestionAndAnswer({ question, answer }: QuestionAndAnswer) {
 		<li>
 			<button>{question}</button>
 			<p>{answer}</p>
+            <hr></hr>
 		</li>
+        
 	);
 }
 function FAQ() {
@@ -40,7 +42,7 @@ function FAQ() {
 					alt="https://images.pexels.com/photos/3771060/pexels-photo-3771060.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 				></img>
 			</section>
-			<section className={"accordion"}>
+			<section className={"faqs"}>
 				<ul className="faq-list">
 					{faqs.map((faq: QuestionAndAnswer, index: number) => {
 						return (
