@@ -19,7 +19,7 @@ model User {
     avatar        String
     userName      String        @unique
     password      String
-    counsellor_ID Int
+    counsellor_ID Int?
     appointments  Appointment[]
     messages      Message[]
     reviews       Review[]
@@ -33,10 +33,28 @@ model Counsellor {
     licensing    String
     avatar       String
     hourlyRate   Int
+    yearsExpirience Int?
+    gender String?
     appointments Appointment[]
     messages     Message[]
     reviews      Review[]
     specialties  CounsellorOnService[]
+    languages CounsellorOnLanguage []
+}
+
+model Language {
+    id           Int                   @id @default(autoincrement())
+    language String
+    councellors CounsellorOnLanguage[]
+}
+
+model CounsellorOnLanguage {
+    id           Int                   @id @default(autoincrement())
+    language_ID Int
+    counsellor_ID Int
+    counsellor    Counsellor @relation(fields: [counsellor_ID], references: [id], onDelete: Cascade)
+    language    Language @relation(fields: [language_ID], references: [id], onDelete: Cascade)
+
 }
 
 model Service {
@@ -55,7 +73,7 @@ model CounsellorOnService {
 
 model Review {
     id            Int        @id @default(autoincrement())
-    date          DateTime   @db.Date
+    date          String
     content       String
     user_ID       Int
     counsellor_ID Int
@@ -65,7 +83,7 @@ model Review {
 
 model Message {
     id            Int        @id @default(autoincrement())
-    date          DateTime   @db.Date
+    date          String
     content       String
     user_ID       Int
     counsellor_ID Int
@@ -75,8 +93,8 @@ model Message {
 
 model Appointment {
     id            Int        @id @default(autoincrement())
-    date          DateTime   @db.Date
-    time          DateTime   @db.Time
+    date          String
+    time          String
     user_ID       Int
     counsellor_ID Int
     user          User       @relation(fields: [user_ID], references: [id], onDelete: Cascade)
