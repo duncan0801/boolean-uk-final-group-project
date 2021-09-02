@@ -1,0 +1,23 @@
+main.counsellors {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  place-items: center;
+}
+
+section.counsellor-filters {
+  display: grid;
+  justify-self: center;
+  align-self: start;
+  padding: 3rem;
+  border: black solid 1px;
+  margin-left: 4rem;
+}
+
+section.counsellor-card-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 3rem;
+  gap: 2rem;
+  justify-content: space-around;
+}
