@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import Banner from "../components/Banner";
 import useStore from "../store";
 import "../styles/faq.css";
 
@@ -22,7 +23,6 @@ function QuestionAndAnswer({ question, answer }: QuestionAndAnswer) {
 function FAQ() {
 	const faqs = useStore(state => state.faqs)
 	const setFaqs = useStore(state => state.setFaqs)
-	console.log(faqs);
 
 	useEffect(() => {
 		fetch("http://localhost:4000/faq")
@@ -35,13 +35,10 @@ function FAQ() {
 	}
 	return (
 		<>
-			<section className={"banner"}>
-				<h1>FAQs</h1>
-				<img
-					src="https://images.pexels.com/photos/3771060/pexels-photo-3771060.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-					alt="https://images.pexels.com/photos/3771060/pexels-photo-3771060.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-				></img>
-			</section>
+			<Banner
+            title="FAQs"
+            imageLink="https://images.pexels.com/photos/3771060/pexels-photo-3771060.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            />
 			<section className={"faqs"}>
 				<ul className="faq-list">
 					{faqs.map((faq: QuestionAndAnswer, index: number) => {

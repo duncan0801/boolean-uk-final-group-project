@@ -1,23 +1,62 @@
 import React from "react";
-import { Link } from "react-router-dom"
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Banner from "../components/Banner";
+import useStore from "../store";
+import "../styles/home.css";
 
-function Home() {
-    return (
-      <h2>Home</h2>
-        // <nav>
-        //   <ul>
-        //     <li>
-        //       <Link to="/">Home</Link>
-        //     </li>
-        //     <li>
-        //       <Link to="/about">About</Link>
-        //     </li>
-        //     <li>
-        //       <Link to="/users">Users</Link>
-        //     </li>
-        //   </ul>
-        // </nav>
-    )
+type ServiceTileProps = {
+	service: string;
+	imageLink: string;
+};
+function ServiceTile({ service, imageLink }: ServiceTileProps) {
+	return (
+		<li>
+			<img src={imageLink} alt={imageLink} />
+			<h3>{service}</h3>
+		</li>
+	);
 }
 
-export default Home
+function Home() {
+	const services = useStore((state) => state.services);
+	const setServices = useStore((state) => state.setServices);
+
+	useEffect(() => {
+		fetch("http://localhost:4000/services")
+			.then((res) => res.json())
+			.then((entity) => setServices(entity.data))
+			.then(() => console.log(services));
+	}, []);
+
+	return (
+		<>
+			<Banner
+				title=""
+				imageLink="https://images.pexels.com/photos/6146929/pexels-photo-6146929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+			/>
+			<div className="wrapper">
+				<h2>Services</h2>
+				<section className="services">
+					<ul>
+						{services ? (
+							services.map((service) => {
+								return (
+									<ServiceTile
+										key={service.name}
+										service={service.name}
+										imageLink=""
+									/>
+								);
+							})
+						) : (
+							<h2>loading...</h2>
+						)}
+					</ul>
+				</section>
+			</div>
+		</>
+	);
+}
+
+export default Home;

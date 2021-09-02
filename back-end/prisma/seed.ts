@@ -144,35 +144,35 @@ function generateReview() {
 
 async function main() {
 
-	// // GENERATE£ FAQs
-	// let FAQs = generateFAQs();
-	// for (const FAQ of FAQs) {
-	// 	await seedingClient.faq.create({
-	// 		data: {
-	// 			question: FAQ.question,
-	// 			answer: FAQ.answer,
-	// 		},
-	// 	});
-	// }
+	// GENERATE£ FAQs
+	let FAQs = generateFAQs();
+	for (const FAQ of FAQs) {
+		await seedingClient.faq.create({
+			data: {
+				question: FAQ.question,
+				answer: FAQ.answer,
+			},
+		});
+	}
 
-	// //GENERATE SPECIALTIES/ SERVICES
-	// for (const specialty of specialtiesList) {
-	// 	await seedingClient.service.create({
-	// 		data: { name: specialty },
-	// 	});
-	// }
-	// // GENERATE COUNSELLORS
-	// let createdCounsellors = [];
-	// for (let i = 1; i <= numberOfCounsellors; i++) {
-	// 	const counsellor = generateCounsellor();
-	// 	createdCounsellors.push(
-	// 		await seedingClient.counsellor.create({
-	// 			data: {
-	// 				...counsellor,
-	// 			},
-	// 		})
-	// 	);
-	// }
+	//GENERATE SPECIALTIES/ SERVICES
+	for (const specialty of specialtiesList) {
+		await seedingClient.service.create({
+			data: { name: specialty },
+		});
+	}
+	// GENERATE COUNSELLORS
+	let createdCounsellors = [];
+	for (let i = 1; i <= numberOfCounsellors; i++) {
+		const counsellor = generateCounsellor();
+		createdCounsellors.push(
+			await seedingClient.counsellor.create({
+				data: {
+					...counsellor,
+				},
+			})
+		);
+	}
 
 	// //GENERATE USERS
 	// let createdUsers = [];

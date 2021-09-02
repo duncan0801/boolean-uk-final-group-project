@@ -1,0 +1,27 @@
+.wrapper {
+	margin: 20px;
+}
+
+h2 {
+	color: teal;
+	font-size: 32px;
+}
+.services ul {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	list-style: none;
+	grid-gap: 5px;
+}
+
+.services li {
+	background-color: teal;
+	border-radius: 2px;
+	display: grid;
+	place-content: center;
+	height: 150px;
+}
+
+.services li h3 {
+	text-align: center;
+	color: rgb(228, 228, 228);
+}
