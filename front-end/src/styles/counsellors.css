@@ -8,9 +8,8 @@ section.counsellor-filters {
   display: grid;
   justify-self: center;
   align-self: start;
-  padding: 3rem;
-  border: black solid 1px;
-  margin-left: 4rem;
+  padding: 1rem;
+  margin-left: 2rem;
 }
 
 section.counsellor-card-grid {
