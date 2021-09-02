@@ -12,15 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllFaqs = void 0;
+exports.getAllServices = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
-const getAllFaqs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllServices = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const faqs = yield dbClient_1.default.faq.findMany();
-        res.json({ data: faqs });
+        const services = yield dbClient_1.default.counsellorOnService.findMany();
+        res.json({ data: services });
     }
     catch (error) {
         res.json({ error });
     }
 });
-exports.getAllFaqs = getAllFaqs;
+exports.getAllServices = getAllServices;

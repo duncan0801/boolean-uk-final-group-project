@@ -12,6 +12,7 @@ import faqRouter from "./resources/faq/router";
 import servicesRouter from "./resources/services/router";
 import reviewsRouter from "./resources/reviews/router";
 import appointmentsRouter from "./resources/appointments/router";
+import CounsellorOnServiceRouter from "./resources/CounsellorOnServiceRouter/router";
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/faq", faqRouter);
 app.use("/services", servicesRouter);
 app.use("/appointments", appointmentsRouter);
 app.use("/reviews", reviewsRouter);
+app.use("/counsellor-on-service", CounsellorOnServiceRouter);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json("No route match");
