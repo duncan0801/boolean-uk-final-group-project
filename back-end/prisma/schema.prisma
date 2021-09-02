@@ -83,7 +83,7 @@ model Appointment {
     counsellor    Counsellor @relation(fields: [counsellor_ID], references: [id], onDelete: Cascade)
 }
 
-model FAQ {
+model Faq {
     id       Int    @id @default(autoincrement())
     question String
     answer   String
