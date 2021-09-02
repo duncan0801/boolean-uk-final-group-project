@@ -1,23 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import Banner from "../components/Banner";
 
-function Home() {
-    return (
-      <h2>Home</h2>
-        // <nav>
-        //   <ul>
-        //     <li>
-        //       <Link to="/">Home</Link>
-        //     </li>
-        //     <li>
-        //       <Link to="/about">About</Link>
-        //     </li>
-        //     <li>
-        //       <Link to="/users">Users</Link>
-        //     </li>
-        //   </ul>
-        // </nav>
-    )
+function serviceTile() {
+	return <div></div>;
 }
 
-export default Home
+function Home() {
+	return (
+		<>
+			<Banner
+				title="Home"
+				imageLink="https://images.pexels.com/photos/6146929/pexels-photo-6146929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+			/>
+			<h2>Services</h2>
+		</>
+	);
+}
+
+export default Home;
