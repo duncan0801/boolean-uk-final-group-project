@@ -115,7 +115,7 @@ function Header() {
       <h1 className="logo">online counselling</h1>
       <div></div>
       <nav>
-        <ul>
+        <ul className="header-ul">
           <Link to="/services" className="header-links">
             <h3 className="main-nav-heading">Services</h3>
           </Link>

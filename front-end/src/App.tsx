@@ -18,6 +18,7 @@ import Chat from "./pages/Chat";
 import Reviews from "./pages/Reviews";
 import FAQ from "./pages/FAQ";
 
+
 function App() {
   return (
     <div className="app">
