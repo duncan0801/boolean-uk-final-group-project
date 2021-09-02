@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import useStore from "../store";
 import "../styles/faq.css";
 
 type QuestionAndAnswer = {
@@ -17,13 +18,14 @@ function QuestionAndAnswer({ question, answer }: QuestionAndAnswer) {
 	);
 }
 function FAQ() {
-	const [faqs, setFaq] = useState();
+	const faqs = useStore(state => state.faqs)
+	const setFaqs = useStore(state => state.setFaqs)
 	console.log(faqs);
 
 	useEffect(() => {
 		fetch("http://localhost:4000/faq")
 			.then((res) => res.json())
-			.then((response) => setFaq(response.data))
+			.then((response) => setFaqs(response.data))
 			.then(() => console.log(faqs));
 	}, []);
 	if (!faqs) {
