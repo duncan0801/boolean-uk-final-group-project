@@ -11,12 +11,14 @@ import Login from "./pages/Login";
 import Header from "./components/Header";
 import Signup from "./pages/Signup";
 import Counsellors from "./pages/Counsellors";
-import Counsellor from "./pages/Counsellor";
+import SingleCounsellor from "./pages/SingleCounsellor";
 import Appointments from "./pages/Appointments";
 import User from "./pages/User";
 import Chat from "./pages/Chat";
 import Reviews from "./pages/Reviews";
 import FAQ from "./pages/FAQ";
+
+
 
 function App() {
   return (
@@ -45,8 +47,8 @@ function App() {
           <Route path="/bookings/counsellor:id">
             <Appointments />
           </Route>
-          <Route path="/counsellors/john">
-            <Counsellor />
+          <Route path="/counsellors/:id">
+            <SingleCounsellor />
           </Route>
           <Route path="/counsellors">
             <Counsellors />

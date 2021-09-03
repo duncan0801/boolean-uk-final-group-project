@@ -1,25 +1,25 @@
-import react from "react"
 import "../styles/counsellor-card.css"
-import useStore from "../store";
+import { Counsellor } from "../store";
+import { Link } from "react-router-dom"
 
 
-
-type Counsellor = {
-    id: number
-    firstName:    string
-    lastName:     string
-	avatar: string
-    specialties:  string[]
+type CounsellorCardProps = {
+    counsellor: Counsellor
 }
 
-function CounsellorCard(counsellor : Counsellor ) {
+function CounsellorCard({ counsellor }:  CounsellorCardProps ) {
     return (
+        <Link to={`/counsellors/${counsellor.id}`}>
+
         <article className="counsellor-card">
             <img className="counsellor-image" src={counsellor.avatar}
             alt={counsellor.firstName}/>
-            <h3 className="counsellor-name">{counsellor.firstName}</h3>
+            <h3 className="counsellor-name">{counsellor.firstName + " " + counsellor.lastName}</h3>
             <h4>{counsellor.specialties}</h4>
         </article>
+        </Link>
+
+       
     )
 }
 

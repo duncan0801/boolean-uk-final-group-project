@@ -13,8 +13,6 @@ header {
 	font-family: Noto Sans, sans-serif;
 }
 
-
-
 .header-ul {
 	display: grid;
 	grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr 1fr;
@@ -49,4 +47,8 @@ header {
 svg {
 	height: 40px;
 	width: 40px;
+}
+
+.home-link {
+	text-decoration: none;
 }
