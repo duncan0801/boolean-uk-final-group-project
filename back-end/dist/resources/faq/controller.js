@@ -16,7 +16,7 @@ exports.getAllFaqs = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const getAllFaqs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const faqs = yield dbClient_1.default.fAQ.findMany();
+        const faqs = yield dbClient_1.default.faq.findMany();
         res.json({ data: faqs });
     }
     catch (error) {

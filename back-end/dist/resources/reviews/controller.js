@@ -16,7 +16,12 @@ exports.addReview = exports.getAllReviews = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const getAllReviews = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const reviews = yield dbClient_1.default.review.findMany();
+        const reviews = yield dbClient_1.default.review.findMany({
+            include: {
+                user: true,
+                counsellor: true,
+            },
+        });
         res.json({ data: reviews });
     }
     catch (error) {
