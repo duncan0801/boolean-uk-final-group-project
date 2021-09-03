@@ -33,7 +33,7 @@ model Counsellor {
     licensing    String
     avatar       String
     hourlyRate   Int
-    yearsExpirience Int?
+    yearsExperience Int?
     gender String?
     appointments Appointment[]
     messages     Message[]
@@ -45,7 +45,7 @@ model Counsellor {
 model Language {
     id           Int                   @id @default(autoincrement())
     language String
-    councellors CounsellorOnLanguage[]
+    counsellors CounsellorOnLanguage[]
 }
 
 model CounsellorOnLanguage {

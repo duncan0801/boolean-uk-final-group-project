@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -17,7 +17,6 @@ import User from "./pages/User";
 import Chat from "./pages/Chat";
 import Reviews from "./pages/Reviews";
 import FAQ from "./pages/FAQ";
-
 
 function App() {
   return (

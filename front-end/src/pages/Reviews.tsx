@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import useStore from "../store";
 import "../styles/review.css";
 
+type Review = {
+  id: number;
+  date: string;
+  content: string;
+  user_ID: number;
+  counsellor_ID: number;
+};
+
 function Reviews() {
+  const reviews = useStore((state) => state.reviews);
+  const setReviews = useStore((state) => state.setReviews);
+
+  if (!reviews) {
+    return <h2>loading...</h2>;
+  }
   return (
     <section className="reviews">
       <div className="review-banner">
@@ -16,63 +31,37 @@ function Reviews() {
 
       <h2 className="review-hero">WHAT OUR CUSTOMERS SAY</h2>
 
-      <div className="reviews-wrapper">
-        <div className="review-card">
-          <div className="user-details">
-            <span className="name-surname">Review written by Jane Doe</span>
-            <span className="city">Date 12/10/21</span>
-          </div>
+      {/* <div className="reviews-wrapper">
+        {reviews.map((review) => (
+          <div className="review-card">
+            <div className="user-details">
+              <span className="name-surname">
+                Review written by {review.user?.userName}{" "}
+              </span>
+              <span className="city">Date {review.date}</span>
+            </div>
 
-          <blockquote>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
-            ducimus labore, eius aut exercitationem commodi nesciunt nemo, a
-            natus neque recusandae, soluta amet accusamus voluptates nihil
-            placeat aliquid quam at.
-          </blockquote>
-          <div className="bottom-review-card">
-            <div className="frame-img-review">
-              <img
-                src="https://images.pexels.com/photos/1142069/pexels-photo-1142069.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                alt="img"
-              />
-            </div>
-            <div className="counsellor-reviews-wrapper">
-              <h3 className="counsellor-reviews-name">
-                Counsellor name -(More reviews)
-              </h3>
-              <h4 className="counsellor-reviews-speciality">Speciality</h4>
-            </div>
-          </div>
-        </div>
-
-        <div className="review-card">
-          <div className="user-details">
-            <span className="name-surname">Review written by Jane Doe</span>
-            <span className="city">Date 12/10/21</span>
-          </div>
-
-          <blockquote>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
-            ducimus labore, eius aut exercitationem commodi nesciunt nemo, a
-            natus neque recusandae, soluta amet accusamus voluptates nihil
-            placeat aliquid quam at.
-          </blockquote>
-          <div className="bottom-review-card">
-            <div className="frame-img-review">
-              <img
-                src="https://images.pexels.com/photos/1142069/pexels-photo-1142069.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                alt="img"
-              />
-            </div>
-            <div className="counsellor-reviews-wrapper">
-              <h3 className="counsellor-reviews-name">
-                Counsellor name -(More reviews)
-              </h3>
-              <h4 className="counsellor-reviews-speciality">Speciality</h4>
+            <blockquote>{review.content}</blockquote>
+            <div className="bottom-review-card">
+              <div className="frame-img-review">
+                <img
+                  src="https://images.pexels.com/photos/1142069/pexels-photo-1142069.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                  alt="img"
+                />
+              </div>
+              <div className="counsellor-reviews-wrapper">
+                <h3 className="counsellor-reviews-name">
+                  {review.counsellor?.firstName} {review.counsellor?.lastName}{" "}
+                  -(More reviews)
+                </h3>
+                <h4 className="counsellor-reviews-speciality">
+                  {review.counsellor?.licensing}
+                </h4>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        ))}
+      </div> */}
 
       <div className="add-review-wrapper">
         <Link to="/AddReview">
