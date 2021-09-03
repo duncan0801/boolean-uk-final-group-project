@@ -3,7 +3,12 @@ import dbClient from "../../utils/dbClient";
 
 export const getAllReviews = async (req: Request, res: Response) => {
   try {
-    const reviews = await dbClient.review.findMany();
+    const reviews = await dbClient.review.findMany({
+      include: {
+        user: true,
+        counsellor: true,
+      },
+    });
     res.json({ data: reviews });
   } catch (error) {
     res.json({ error });

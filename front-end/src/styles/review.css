@@ -1,7 +1,5 @@
 .reviews {
   padding: 20px;
-  /* height: auto;
-  width: 100vh; */
 }
 
 .review-banner {
@@ -34,7 +32,7 @@
 .reviews-wrapper {
   margin: 30px 30px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 15px;
 }
 
@@ -61,14 +59,6 @@
   height: 100%;
   width: auto;
 }
-
-/* .top-card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-gap: 5px;
-  align-items: center;
-  justify-items: baseline;
-} */
 
 .user-details {
   display: grid;
@@ -126,7 +116,7 @@ blockquote {
 .review-button {
   padding: 10px 20px;
   border-radius: 5px;
-  background-color: #609cb3;
+  background-color: #175c62;
   color: white;
   border: 0;
 }
