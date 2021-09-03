@@ -26,9 +26,9 @@ function Counsellors() {
                 <CounsellorFilters />
             </section>
             <section className="counsellor-card-grid">
-            {counsellors.map((counsellor) => (
+            {/* {counsellors.map((counsellor) => (
                 <CounsellorCard counsellor={counsellor}/>
-            ))}
+            ))} */}
             </section>
         </main>
     )

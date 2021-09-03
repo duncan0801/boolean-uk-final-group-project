@@ -3,7 +3,6 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { useEffect } from "react";
 
-
 export type Faq = {
 	id: number;
 	question: string;
