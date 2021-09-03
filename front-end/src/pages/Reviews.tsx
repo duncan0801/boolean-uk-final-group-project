@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Banner from "../components/Banner";
 import useStore from "../store";
 import "../styles/review.css";
 
@@ -15,19 +16,25 @@ function Reviews() {
   const reviews = useStore((state) => state.reviews);
   const setReviews = useStore((state) => state.setReviews);
 
-  if (!reviews) {
-    return <h2>loading...</h2>;
-  }
+  // if (!reviews) {
+  //   return <h2>loading...</h2>;
+  // }
   return (
     <section className="reviews">
-      <div className="review-banner">
+      <Banner
+        title={"REVIEWS"}
+        imageLink={
+          "https://images.pexels.com/photos/189349/pexels-photo-189349.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+        }
+      />
+      {/* <div className="review-banner">
         <img
           className="review-banner-img"
           src="https://images.pexels.com/photos/189349/pexels-photo-189349.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
           alt=""
         ></img>
         <h1 className="banner-title">REVIEWS</h1>
-      </div>
+      </div> */}
 
       <h2 className="review-hero">WHAT OUR CUSTOMERS SAY</h2>
 
