@@ -1,10 +1,10 @@
 .wrapper {
 	margin: 20px;
 }
-
 h2 {
-	color: teal;
+	color: #09b098;
 	font-size: 32px;
+	text-align: center;
 }
 .services ul {
 	display: grid;
@@ -12,24 +12,47 @@ h2 {
 	list-style: none;
 	grid-gap: 5px;
 }
-
 .services li {
-	background-color: teal;
+	background-color: #09b098;
 	border-radius: 2px;
 	display: grid;
 	place-content: center;
 	height: 150px;
 }
-
 .services li h3 {
 	text-align: center;
 	color: rgb(228, 228, 228);
 }
-
-.counsellor-disc {
-	border: 2px solid white;
+section.counsellors {
+	background-color: #09b098;
+	display: grid;
+	place-items: center;
+	padding-bottom: 20px;
+}
+section.counsellors h2 {
+	color: white;
+}
+section.counsellors h3 {
+	text-align: center;
+	color: rgb(162, 255, 227);
+}
+.counsellor-container {
+	display: grid;
+	background-color: #09b098;
+	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }
 .counsellor-disc img {
 	border-radius: 50%;
-	width: 200px;
+	width: 130px;
+}
+section.counsellors button {
+	background: #175c62;
+	border-radius: 5px;
+	color: white;
+	border: none;
+	padding: 10px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+	font-size: large;
 }
