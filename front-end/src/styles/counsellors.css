@@ -12,6 +12,11 @@ section.counsellor-filters {
   margin-left: 2rem;
 }
 
+h3.filter-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 section.counsellor-card-grid {
   display: flex;
   flex-direction: row;

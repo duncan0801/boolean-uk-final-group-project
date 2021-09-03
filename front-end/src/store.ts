@@ -97,6 +97,8 @@ type Store = {
 	setServices: (services: Service[]) => void;
 	counsellors: Counsellor[] | null;
 	setCounsellors: (counsellors: Counsellor[]) => void;
+	counsellor: Counsellor | null;
+	setCounsellor: (counsellor: Counsellor) => void;
 	users: User[] | null;
 	setUsers: (users: User[]) => void;
 	languages: Language[] | null;
@@ -110,6 +112,11 @@ type Store = {
 
 	fetchFaqs: () => void;
 	fetchServices: () => void;
+	fetchCounsellors: () => void;
+	fetchCounsellorById: (id: string) => void;
+    fetchUsers: () => void;
+    fetchLanguages: () => void;
+    fetchReviews: () => void;
 };
 
 const useStore = create<Store>(
@@ -121,6 +128,8 @@ const useStore = create<Store>(
 		setServices: (services) => set({ services: services }),
 		counsellors: null,
 		setCounsellors: (counsellors) => set({ counsellors: counsellors }),
+		counsellor: null,
+		setCounsellor: (counsellor) => set({ counsellor: counsellor }),
 		users: null,
 		setUsers: (users) => set({ users: users }),
 		languages: null,
@@ -146,6 +155,11 @@ const useStore = create<Store>(
 			fetch("http://localhost:4000/counsellors")
 				.then((res) => res.json())
 				.then((entity) => set({ counsellors: entity.data }));
+		},
+		fetchCounsellorById: (id) => {
+			fetch(`http://localhost:4000/counsellors/${id}`)
+				.then((res) => res.json())
+				.then((counsellor) => set({ counsellor: counsellor.data }));
 		},
 		fetchUsers: () => {
 			fetch("http://localhost:4000/users")

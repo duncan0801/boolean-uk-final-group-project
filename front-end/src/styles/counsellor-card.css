@@ -4,7 +4,7 @@ article.counsellor-card {
   height: 30rem;
   border-radius: 10px;
   display: grid;
-  grid-template-rows: 250px repeat(3, 75px);
+  grid-template-rows: 300px repeat(3, 75px);
   place-items: center;
 }
 
