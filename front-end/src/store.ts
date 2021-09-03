@@ -178,7 +178,6 @@ const useStore = create<Store>(
 				.then((entity) => set({ reviews: entity.data }));
 		},
 	}))
-
 );
 
 export default useStore;
