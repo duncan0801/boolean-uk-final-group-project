@@ -3,6 +3,7 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { useEffect } from "react";
 
+
 export type Faq = {
 	id: number;
 	question: string;
@@ -92,6 +93,7 @@ type Store = {
 
 	faqs: Faq[] | null;
 	setFaqs: (faqs: Faq[]) => void;
+
 	services: Service[] | null;
 	setServices: (services: Service[]) => void;
 	counsellors: Counsellor[] | null;
@@ -115,6 +117,7 @@ const useStore = create<Store>(
 	devtools((set) => ({
 		faqs: null,
 		setFaqs: (faqs) => set({ faqs: faqs }),
+
 		services: null,
 		setServices: (services) => set({ services: services }),
 		counsellors: null,
