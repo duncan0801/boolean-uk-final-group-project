@@ -23,13 +23,12 @@ function QuestionAndAnswer({ question, answer }: QuestionAndAnswer) {
 function FAQ() {
 	const faqs = useStore(state => state.faqs)
 	const setFaqs = useStore(state => state.setFaqs)
+	const fetchFaqs = useStore(state => state.fetchFaqs)
 
-	useEffect(() => {
-		fetch("http://localhost:4000/faq")
-			.then((res) => res.json())
-			.then((response) => setFaqs(response.data))
-			.then(() => console.log(faqs));
-	}, []);
+    useEffect(() => {
+        fetchFaqs()
+    }, [])
+	
 	if (!faqs) {
 		return <h2>loading...</h2>;
 	}

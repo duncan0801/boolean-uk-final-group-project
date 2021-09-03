@@ -25,3 +25,11 @@ h2 {
 	text-align: center;
 	color: rgb(228, 228, 228);
 }
+
+.counsellor-disc {
+	border: 2px solid white;
+}
+.counsellor-disc img {
+	border-radius: 50%;
+	width: 200px;
+}
