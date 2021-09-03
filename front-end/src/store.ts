@@ -3,90 +3,93 @@ import { devtools } from "zustand/middleware";
 import { useEffect } from "react";
 
 export type Faq = {
+
 	id: number;
 	question: string;
 	answer: string;
+
 };
 export type User = {
-	id: number;
-	firstName: string;
-	lastName: string;
-	avatar: string;
-	userName: string;
-	password: string;
-	counsellor_ID?: number;
-	appointments?: Appointment[];
-	messages?: Message[];
-	reviews?: Review[];
+  id: number;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  userName: string;
+  password: string;
+  counsellor_ID?: number;
+  appointments?: Appointment[];
+  messages?: Message[];
+  reviews?: Review[];
 };
 export type Service = {
-	id: number;
-	name: string;
+  id: number;
+  name: string;
 };
 export type Language = {
-	id: number;
-	language: string;
-	counsellors: Counsellor[];
+  id: number;
+  language: string;
+  counsellors: Counsellor[];
 };
 export type CounsellorOnLanguage = {
-	id: number;
-	language_ID: number;
-	counsellor_ID: number;
-	counsellor?: Counsellor;
-	language?: Language;
+  id: number;
+  language_ID: number;
+  counsellor_ID: number;
+  counsellor?: Counsellor;
+  language?: Language;
 };
 export type CounsellorOnService = {
-	id: number;
-	counsellor_ID: number;
-	service_ID: number;
-	counsellor: Counsellor;
-	service: Service;
+  id: number;
+  counsellor_ID: number;
+  service_ID: number;
+  counsellor: Counsellor;
+  service: Service;
 };
 export type Counsellor = {
-	id: number;
-	firstName: string;
-	lastName: string;
-	about: string;
-	licensing: string;
-	avatar: string;
-	hourlyRate: number;
-	yearsExperience: number;
-	gender: string;
-	appointments: Appointment[];
-	messages: Message[];
-	reviews: Review[];
-	specialties: Service[];
-	languages: Language[];
+  id: number;
+  firstName: string;
+  lastName: string;
+  about: string;
+  licensing: string;
+  avatar: string;
+  hourlyRate: number;
+  yearsExperience: number;
+  gender: string;
+  appointments: Appointment[];
+  messages: Message[];
+  reviews: Review[];
+  specialties: Service[];
+  languages: Language[];
 };
 export type Review = {
-	id: number;
-	date: string;
-	content: string;
-	user_ID: number;
-	counsellor_ID: number;
-	user?: User;
-	counsellor?: Counsellor;
+  id: number;
+  date: string;
+  content: string;
+  user_ID: number;
+  counsellor_ID: number;
+  user?: User;
+  counsellor?: Counsellor;
 };
 export type Message = {
-	id: number;
-	date: string;
-	content: string;
-	user_ID: number;
-	counsellor_ID: number;
-	user?: User;
-	counsellor?: Counsellor;
+  id: number;
+  date: string;
+  content: string;
+  user_ID: number;
+  counsellor_ID: number;
+  user?: User;
+  counsellor?: Counsellor;
 };
 export type Appointment = {
-	id: number;
-	date: string;
-	content: string;
-	user_ID: number;
-	counsellor_ID: number;
-	user?: User;
-	counsellor?: Counsellor;
+  id: number;
+  date: string;
+  content: string;
+  user_ID: number;
+  counsellor_ID: number;
+  user?: User;
+  counsellor?: Counsellor;
 };
 
 type Store = {
+
 	faqs: Faq[] | null;
 	setFaqs: (faqs: Faq[]) => void;
 
@@ -175,6 +178,7 @@ const useStore = create<Store>(
 				.then((entity) => set({ reviews: entity.data }));
 		},
 	}))
+
 );
 
 export default useStore;
