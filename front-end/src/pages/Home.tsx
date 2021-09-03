@@ -29,21 +29,16 @@ function CounsellorDisc({ counsellorImage }: { counsellorImage: string }) {
 function Home() {
 	const services = useStore((state) => state.services);
 	const setServices = useStore((state) => state.setServices);
+	const fetchServices = useStore((state) => state.fetchServices);
 	const counsellors = useStore((state) => state.counsellors);
 	const setCounsellors = useStore((state) => state.setCounsellors);
+	const fetchCounsellors = useStore((state) => state.fetchCounsellors);
 
 	useEffect(() => {
-		fetch("http://localhost:4000/services")
-			.then((res) => res.json())
-			.then((entity) => setServices(entity.data))
-			.then(() => console.log(services));
+		fetchServices()
+        fetchCounsellors()
 	}, []);
-	useEffect(() => {
-		fetch("http://localhost:4000/counsellors")
-			.then((res) => res.json())
-			.then((entity) => setCounsellors(entity.data))
-			.then(() => console.log(services));
-	}, []);
+	
 
 	return (
 		<>
