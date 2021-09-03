@@ -8,17 +8,17 @@ import Tab from "@material-ui/core/Tab";
 import { Link, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      "& > *": {
-        margin: theme.spacing(1),
-      },
-    },
-  })
+	createStyles({
+		root: {
+			"& > *": {
+				margin: theme.spacing(1),
+			},
+		},
+	})
 );
 
 function Header() {
-  const classes = useStyles();
+	const classes = useStyles();
 
   return (
     <header>
@@ -67,6 +67,7 @@ function Header() {
         </Link>
       </div>
     </header>
+    
   );
 }
 

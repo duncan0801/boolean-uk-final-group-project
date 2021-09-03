@@ -174,41 +174,41 @@ async function main() {
 	// 	);
 	// }
 
-	// //GENERATE USERS
-	// let createdUsers = [];
-	// for (let i = 1; i <= numberOfUsers; i++) {
-	// 	const user = generateUser(i);
-	// 	const userCreated = await seedingClient.user.create({
-	// 		data: {
-	// 			...user,
-	// 			// 	messages: {
-	// 			// 		create: {
-	// 			// 			date: faker.date.recent(),
-	// 			// 			content: faker.lorem.sentence(),
-	// 			// 			user: {connect:{id: i}},
-	// 			// 			counsellor_ID: user.counsellor_ID,
-	// 			// 		},
-	// 			// 	},
-	// 			// 	appointments: {
-	// 			// 		create: {
-	// 			// 			date: faker.date.recent(),
-	// 			// 			time: faker.time.recent(),
-	// 			// 			user: i,
-	// 			// 			counsellor_ID: user.counsellor_ID,
-	// 			// 		},
-	// 			// 	},
-	// 			// 	reviews: {
-	// 			// 		create: {
-	// 			// 			date: faker.date.recent(),
-	// 			// 			content: faker.lorem.paragraph(),
-	// 			// 			user: i,
-	// 			// 			counsellor_ID: user.counsellor_ID,
-	// 			// 		},
-	// 			// 	},
-	// 		},
-	// 	});
-	// 	createdUsers.push(userCreated);
-	// }
+	//GENERATE USERS
+	let createdUsers = [];
+	for (let i = 1; i <= numberOfUsers; i++) {
+		const user = generateUser(i);
+		const userCreated = await seedingClient.user.create({
+			data: {
+				...user,
+				// 	messages: {
+				// 		create: {
+				// 			date: faker.date.recent(),
+				// 			content: faker.lorem.sentence(),
+				// 			user: {connect:{id: i}},
+				// 			counsellor_ID: user.counsellor_ID,
+				// 		},
+				// 	},
+				// 	appointments: {
+				// 		create: {
+				// 			date: faker.date.recent(),
+				// 			time: faker.time.recent(),
+				// 			user: i,
+				// 			counsellor_ID: user.counsellor_ID,
+				// 		},
+				// 	},
+				// 	reviews: {
+				// 		create: {
+				// 			date: faker.date.recent(),
+				// 			content: faker.lorem.paragraph(),
+				// 			user: i,
+				// 			counsellor_ID: user.counsellor_ID,
+				// 		},
+				// 	},
+			},
+		});
+		createdUsers.push(userCreated);
+	}
 
 	// COUNSELLOR ON SERVICES
 	// for (const counsellor of createdCounsellors) {
