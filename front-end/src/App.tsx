@@ -46,7 +46,7 @@ function App() {
           <Route path="/bookings/counsellor:id">
             <Appointments />
           </Route>
-          <Route path="/counsellors:id">
+          <Route path="/counsellors/john">
             <Counsellor />
           </Route>
           <Route path="/counsellors">
