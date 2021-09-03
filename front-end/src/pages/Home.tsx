@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Banner from "../components/Banner";
 import useStore from "../store";
 import "../styles/home.css";
@@ -29,21 +29,22 @@ function CounsellorDisc({ counsellorImage }: { counsellorImage: string }) {
 function Home() {
 	const services = useStore((state) => state.services);
 	const setServices = useStore((state) => state.setServices);
+	const fetchServices = useStore((state) => state.fetchServices);
 	const counsellors = useStore((state) => state.counsellors);
 	const setCounsellors = useStore((state) => state.setCounsellors);
+	const fetchCounsellors = useStore((state) => state.fetchCounsellors);
+	const history = useHistory();
 
 	useEffect(() => {
-		fetch("http://localhost:4000/services")
-			.then((res) => res.json())
-			.then((entity) => setServices(entity.data))
-			.then(() => console.log(services));
+		fetchServices();
+		fetchCounsellors();
 	}, []);
-	useEffect(() => {
-		fetch("http://localhost:4000/counsellors")
-			.then((res) => res.json())
-			.then((entity) => setCounsellors(entity.data))
-			.then(() => console.log(services));
-	}, []);
+
+	const fiveCounsellors = counsellors ? counsellors.slice(0, 5) : null;
+
+	function handleCouncillorButtonClick() {
+		history.push("/counsellors");
+	}
 
 	return (
 		<>
@@ -70,27 +71,32 @@ function Home() {
 						)}
 					</ul>
 				</section>
-				<section className="counsellors">
-					<div>
-						<div>
-							<h2>
-								Professional, licensed and vetted therapist who
-								you can trust
-							</h2>
-							<div className="counsellor-container">
-								{counsellors ?counsellors.map((counsellor) => {
-									return (
-										<CounsellorDisc
-											counsellorImage={counsellor.avatar}
-										/>
-									);
-								}) : <h2>Loading...</h2>}
-							</div>
-						</div>
-						<div></div>
-					</div>
-				</section>
 			</div>
+			<section className="counsellors">
+				<div className="wrapper">
+					<h2>Counsellors</h2>
+					<h3>
+						Professional, licensed, and vetted therapist who you can
+						trust
+					</h3>
+					<div className="counsellor-container">
+						{fiveCounsellors ? (
+							fiveCounsellors.map((counsellor) => {
+								return (
+									<CounsellorDisc
+										counsellorImage={counsellor.avatar}
+									/>
+								);
+							})
+						) : (
+							<h2>Loading...</h2>
+						)}
+					</div>
+				</div>
+				<button onClick={handleCouncillorButtonClick}>
+					View Our Counsellors
+				</button>
+			</section>
 		</>
 	);
 }
