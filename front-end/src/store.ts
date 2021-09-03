@@ -1,4 +1,4 @@
-import { type } from "os";
+
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ export type Faq = {
 	id: number;
 	question: string;
 	answer: string;
+
 };
 export type User = {
 	id: number;
@@ -88,6 +89,7 @@ export type Appointment = {
 };
 
 type Store = {
+
 	faqs: Faq[] | null;
 	setFaqs: (faqs: Faq[]) => void;
 	services: Service[] | null;
@@ -159,6 +161,7 @@ const useStore = create<Store>(
 				.then((entity) => set({ reviews: entity.data }));
 		},
 	}))
+
 );
 
 export default useStore;
