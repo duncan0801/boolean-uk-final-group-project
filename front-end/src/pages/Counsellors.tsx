@@ -4,21 +4,21 @@ import CounsellorCard from "../components/CounsellorCard";
 import CounsellorFilters from '../components/CounsellorFilters';
 import useStore from "../store";
 import { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 function Counsellors() {
-    const counsellors = useStore(state => state.counsellors)
-	const setCounsellors = useStore(state => state.setCounsellors)
-	console.log(counsellors);
+    let counsellors = useStore((state) => state.counsellors);
+    const fetchCounsellors = useStore((state) => state.fetchCounsellors);
 
 	useEffect(() => {
-		fetch("http://localhost:4000/counsellors")
-			.then((res) => res.json())
-			.then((response) => setCounsellors(response.data))
-			.then(() => console.log(counsellors));
+        fetchCounsellors()
 	}, []);
+
 	if (!counsellors) {
 		return <h2>loading...</h2>;
 	}
+
+
     return (
         <main className="counsellors">
             <section className="counsellor-filters">
@@ -26,9 +26,9 @@ function Counsellors() {
                 <CounsellorFilters />
             </section>
             <section className="counsellor-card-grid">
-            {/* {counsellors.map((counsellor) => (
-                <CounsellorCard counsellor={counsellor}/>
-            ))} */}
+            {counsellors.map((counsellor) => (
+                <CounsellorCard key={counsellor.id} counsellor={counsellor}/>
+            ))}
             </section>
         </main>
     )
