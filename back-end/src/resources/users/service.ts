@@ -1,5 +1,6 @@
 import dbClient from "../../utils/dbClient";
 import { hash } from "bcrypt";
+import { compare } from "bcrypt";
 
 export type NewUser = {
   userName: string;
@@ -7,7 +8,7 @@ export type NewUser = {
   firstName: string;
   lastName: string;
   avatar: string;
-  counsellor_ID: number;
+  counsellor_ID?: number;
 };
 
 const createWithHash = async (newUser: NewUser) => {

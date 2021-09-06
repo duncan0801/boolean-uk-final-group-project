@@ -3,11 +3,9 @@ import { devtools } from "zustand/middleware";
 import { useEffect } from "react";
 
 export type Faq = {
-
-	id: number;
-	question: string;
-	answer: string;
-
+  id: number;
+  question: string;
+  answer: string;
 };
 export type User = {
   id: number;
@@ -89,95 +87,97 @@ export type Appointment = {
 };
 
 type Store = {
+  faqs: Faq[] | null;
+  setFaqs: (faqs: Faq[]) => void;
 
-	faqs: Faq[] | null;
-	setFaqs: (faqs: Faq[]) => void;
+  services: Service[] | null;
+  setServices: (services: Service[]) => void;
+  counsellors: Counsellor[] | null;
+  setCounsellors: (counsellors: Counsellor[]) => void;
+  counsellor: Counsellor | null;
+  setCounsellor: (counsellor: Counsellor) => void;
+  users: User[] | null;
+  setUsers: (users: User[]) => void;
+  loggedinUser: User | null;
+  setLoggedinUser: (loggedinUser: User) => void;
+  languages: Language[] | null;
+  setLanguages: (languages: Language[]) => void;
+  reviews: Review[] | null;
+  setReviews: (reviews: Review[]) => void;
+  messages: Message[] | null;
+  setMessages: (messages: Message[]) => void;
+  appointments: Appointment[] | null;
+  setAppointments: (appointments: Appointment[]) => void;
 
-	services: Service[] | null;
-	setServices: (services: Service[]) => void;
-	counsellors: Counsellor[] | null;
-	setCounsellors: (counsellors: Counsellor[]) => void;
-	counsellor: Counsellor | null;
-	setCounsellor: (counsellor: Counsellor) => void;
-	users: User[] | null;
-	setUsers: (users: User[]) => void;
-	languages: Language[] | null;
-	setLanguages: (languages: Language[]) => void;
-	reviews: Review[] | null;
-	setReviews: (reviews: Review[]) => void;
-	messages: Message[] | null;
-	setMessages: (messages: Message[]) => void;
-	appointments: Appointment[] | null;
-	setAppointments: (appointments: Appointment[]) => void;
-
-	fetchFaqs: () => void;
-	fetchServices: () => void;
-	fetchCounsellors: () => void;
-	fetchCounsellorById: (id: string) => void;
-    fetchUsers: () => void;
-    fetchLanguages: () => void;
-    fetchReviews: () => void;
-
+  fetchFaqs: () => void;
+  fetchServices: () => void;
+  fetchCounsellors: () => void;
+  fetchCounsellorById: (id: string) => void;
+  fetchUsers: () => void;
+  fetchLanguages: () => void;
+  fetchReviews: () => void;
 };
 
 const useStore = create<Store>(
-	devtools((set) => ({
-		faqs: null,
-		setFaqs: (faqs) => set({ faqs: faqs }),
+  devtools((set) => ({
+    faqs: null,
+    setFaqs: (faqs) => set({ faqs: faqs }),
 
-		services: null,
-		setServices: (services) => set({ services: services }),
-		counsellors: null,
-		setCounsellors: (counsellors) => set({ counsellors: counsellors }),
-		counsellor: null,
-		setCounsellor: (counsellor) => set({ counsellor: counsellor }),
-		users: null,
-		setUsers: (users) => set({ users: users }),
-		languages: null,
-		setLanguages: (languages) => set({ languages: languages }),
-		reviews: null,
-		setReviews: (reviews) => set({ reviews: reviews }),
-		messages: null,
-		setMessages: (messages) => set({ messages: messages }),
-		appointments: null,
-		setAppointments: (appointments) => set({ appointments: appointments }),
+    services: null,
+    setServices: (services) => set({ services: services }),
+    counsellors: null,
+    setCounsellors: (counsellors) => set({ counsellors: counsellors }),
+    counsellor: null,
+    setCounsellor: (counsellor) => set({ counsellor: counsellor }),
+    users: null,
+    setUsers: (users) => set({ users: users }),
+    languages: null,
+    setLanguages: (languages) => set({ languages: languages }),
+    reviews: null,
+    setReviews: (reviews) => set({ reviews: reviews }),
+    messages: null,
+    setMessages: (messages) => set({ messages: messages }),
+    appointments: null,
+    setAppointments: (appointments) => set({ appointments: appointments }),
+    loggedinUser: null,
+    setLoggedinUser: (loggedinUser) => set({ loggedinUser: loggedinUser }),
 
-		fetchFaqs: () => {
-			fetch("http://localhost:4000/faq")
-				.then((res) => res.json())
-				.then((entity) => set({ faqs: entity.data }));
-		},
-		fetchServices: () => {
-			fetch("http://localhost:4000/services")
-				.then((res) => res.json())
-				.then((entity) => set({ services: entity.data }));
-		},
-		fetchCounsellors: () => {
-			fetch("http://localhost:4000/counsellors")
-				.then((res) => res.json())
-				.then((entity) => set({ counsellors: entity.data }));
-		},
-		fetchCounsellorById: (id) => {
-			fetch(`http://localhost:4000/counsellors/${id}`)
-				.then((res) => res.json())
-				.then((counsellor) => set({ counsellor: counsellor.data }));
-		},
-		fetchUsers: () => {
-			fetch("http://localhost:4000/users")
-				.then((res) => res.json())
-				.then((entity) => set({ counsellors: entity.data }));
-		},
-		fetchLanguages: () => {
-			fetch("http://localhost:4000/languages")
-				.then((res) => res.json())
-				.then((entity) => set({ languages: entity.data }));
-		},
-		fetchReviews: () => {
-			fetch("http://localhost:4000/reviews")
-				.then((res) => res.json())
-				.then((entity) => set({ reviews: entity.data }));
-		},
-	}))
+    fetchFaqs: () => {
+      fetch("http://localhost:4000/faq")
+        .then((res) => res.json())
+        .then((entity) => set({ faqs: entity.data }));
+    },
+    fetchServices: () => {
+      fetch("http://localhost:4000/services", { credentials: "include" })
+        .then((res) => res.json())
+        .then((entity) => set({ services: entity.data }));
+    },
+    fetchCounsellors: () => {
+      fetch("http://localhost:4000/counsellors")
+        .then((res) => res.json())
+        .then((entity) => set({ counsellors: entity.data }));
+    },
+    fetchCounsellorById: (id) => {
+      fetch(`http://localhost:4000/counsellors/${id}`)
+        .then((res) => res.json())
+        .then((counsellor) => set({ counsellor: counsellor.data }));
+    },
+    fetchUsers: () => {
+      fetch("http://localhost:4000/users")
+        .then((res) => res.json())
+        .then((entity) => set({ counsellors: entity.data }));
+    },
+    fetchLanguages: () => {
+      fetch("http://localhost:4000/languages")
+        .then((res) => res.json())
+        .then((entity) => set({ languages: entity.data }));
+    },
+    fetchReviews: () => {
+      fetch("http://localhost:4000/reviews")
+        .then((res) => res.json())
+        .then((entity) => set({ reviews: entity.data }));
+    },
+  }))
 );
 
 export default useStore;

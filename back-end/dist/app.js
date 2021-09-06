@@ -16,12 +16,14 @@ const router_5 = __importDefault(require("./resources/services/router"));
 const router_6 = __importDefault(require("./resources/reviews/router"));
 const router_7 = __importDefault(require("./resources/appointments/router"));
 const router_8 = __importDefault(require("./resources/CounsellorOnServiceRouter/router"));
+const router_9 = __importDefault(require("./resources/auth/router"));
 const app = express();
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 //Routes
+app.use(router_9.default);
 app.use("/user", router_1.default);
 app.use("/counsellors", router_2.default);
 app.use("/messages", router_3.default);
