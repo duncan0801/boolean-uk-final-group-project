@@ -56,6 +56,10 @@ button {
 	outline: inherit;
 	font-size: large;
 }
+button.create-account {
+	padding: 5px;
+	margin-top: 5px;
+}
 section.how-it-works ol {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
