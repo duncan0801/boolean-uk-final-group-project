@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import "../styles/login.css";
 import Button from "@material-ui/core/Button";
 // import { Link } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import useStore from "../store";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,6 +21,41 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Login() {
   const classes = useStyles();
+  const loggedinUser = useStore((state) => state.loggedinUser);
+  const setLoggedinUser = useStore((state) => state.setLoggedinUser);
+  const [userName, setuserName] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+
+  console.log(loggedinUser);
+
+  function onLogin(e: any) {
+    e.preventDefault();
+
+    const loginDetails = {
+      userName,
+      password,
+    };
+
+    fetch("http://localhost:4000/login", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginDetails),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw Error("Failed to login");
+        }
+      })
+      .then((user) => {
+        setLoggedinUser(user);
+      })
+      .catch((error) => console.error(error));
+  }
 
   return (
     <div className="login-page-container">
@@ -29,14 +66,25 @@ function Login() {
         </h2>
       </div>
       <div className="form-wrapper">
-        <form className="login" noValidate autoComplete="off">
+        <form
+          onSubmit={(e) => onLogin(e)}
+          className="login"
+          noValidate
+          autoComplete="off"
+        >
           <TextField
+            onChange={(e) => setuserName(e.target.value)}
             id="userName"
             label="username"
             variant="outlined"
             placeholder="Username"
           />
-          <TextField id="password" label="password" variant="outlined" />
+          <TextField
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            label="password"
+            variant="outlined"
+          />
           <button className="login-button">Log in</button>
           {/* <Button variant="contained" color="secondary">
             Log in

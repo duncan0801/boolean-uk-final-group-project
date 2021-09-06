@@ -13,15 +13,17 @@ import servicesRouter from "./resources/services/router";
 import reviewsRouter from "./resources/reviews/router";
 import appointmentsRouter from "./resources/appointments/router";
 import CounsellorOnServiceRouter from "./resources/CounsellorOnServiceRouter/router";
+import authRouter from "./resources/auth/router";
 
 const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 
 //Routes
+app.use(authRouter);
 app.use("/user", usersRouter);
 app.use("/counsellors", counsellorRouter);
 app.use("/messages", messagesRouter);

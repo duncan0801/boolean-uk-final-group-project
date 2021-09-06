@@ -18,14 +18,10 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Check if credentials are valid
         const loggedUser = yield (0, service_1.findUserWithValidation)(userCreds);
-        // handle result
         // Create token, this will be the user Passport
         const token = (0, authGenerator_1.createToken)({
             id: loggedUser.id,
-            //   role: loggedUser.role,
         });
-        // This creates a cookie that can't be accessed by Javascript in the Frontend
-        // httpOnly: true
         res.cookie("token", token, { httpOnly: true });
         res.json({ data: { username: loggedUser.userName } });
     }

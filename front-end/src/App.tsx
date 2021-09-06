@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -17,10 +17,21 @@ import User from "./pages/User";
 import Chat from "./pages/Chat";
 import Reviews from "./pages/Reviews";
 import FAQ from "./pages/FAQ";
-
-
+import useStore from "./store";
 
 function App() {
+  // const [loggedinUser, setLoggedinUser] = useState({
+  //   firstName: "Jane",
+  //   lastName: "Summers",
+  //   avatar:
+  //     "https://images.pexels.com/photos/7955853/pexels-photo-7955853.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  //   userName: "Lola15",
+  //   password: "test",
+  //   counsellor_ID: 1,
+  // });
+  const loggedinUser = useStore((state) => state.loggedinUser);
+  console.log(loggedinUser);
+
   return (
     <div className="app">
       <Header />
@@ -41,7 +52,7 @@ function App() {
           <Route path="/chat/user:id">
             <Chat />
           </Route>
-          <Route path="/user/user:id">
+          <Route path="/user/:id">
             <User />
           </Route>
           <Route path="/bookings/counsellor:id">
@@ -57,7 +68,7 @@ function App() {
             <Signup />
           </Route>
           <Route exact path="/login">
-            <Login />
+            {loggedinUser ? <Redirect to="/home" /> : <Login />}
           </Route>
         </Switch>
       </main>

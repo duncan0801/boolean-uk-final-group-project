@@ -25,6 +25,8 @@ model User {
     reviews       Review[]
 }
 
+
+
 model Counsellor {
     id           Int                   @id @default(autoincrement())
     firstName    String
