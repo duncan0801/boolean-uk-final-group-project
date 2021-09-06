@@ -17,7 +17,7 @@ model User {
     firstName     String
     lastName      String
     avatar        String
-    userName      String        @unique
+    username      String        @unique
     password      String
     counsellor_ID Int?
     appointments  Appointment[]
