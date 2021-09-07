@@ -69,15 +69,15 @@ model Review {
 }
 
 model Message {
-    id              Int        @id @default(autoincrement())
+    id              Int          @id @default(autoincrement())
     date            String
     content         String
-    user_ID         Int
-    counsellor_ID   Int
-    conversation_ID
-    user            User       @relation(fields: [user_ID], references: [id])
-    counsellor      Counsellor @relation(fields: [counsellor_ID], references: [id])
-    conversation Int @relation(fields: [user_ID])
+    user_ID         Int?
+    counsellor_ID   Int?
+    conversation_ID Int
+    user            User?        @relation(fields: [user_ID], references: [id])
+    counsellor      Counsellor?  @relation(fields: [counsellor_ID], references: [id])
+    conversation    Conversation @relation(fields: [conversation_ID], references: [id])
 }
 
 model Conversation {
@@ -86,6 +86,7 @@ model Conversation {
     counsellor_ID Int
     user          User       @relation(fields: [user_ID], references: [id], onDelete: Cascade)
     counsellor    Counsellor @relation(fields: [counsellor_ID], references: [id], onDelete: Cascade)
+    Message       Message[]
 }
 
 model Appointment {
