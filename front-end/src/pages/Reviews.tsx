@@ -15,10 +15,11 @@ type Review = {
 function Reviews() {
   const reviews = useStore((state) => state.reviews);
   const setReviews = useStore((state) => state.setReviews);
+  console.log(reviews);
 
-  // if (!reviews) {
-  //   return <h2>loading...</h2>;
-  // }
+  if (!reviews) {
+    return <h2>loading...</h2>;
+  }
   return (
     <section className="reviews">
       <Banner
@@ -38,12 +39,12 @@ function Reviews() {
 
       <h2 className="review-hero">WHAT OUR CUSTOMERS SAY</h2>
 
-      {/* <div className="reviews-wrapper">
+      <div className="reviews-wrapper">
         {reviews.map((review) => (
           <div className="review-card">
             <div className="user-details">
               <span className="name-surname">
-                Review written by {review.user?.userName}{" "}
+                Review written by {review.user?.username}{" "}
               </span>
               <span className="city">Date {review.date}</span>
             </div>
@@ -68,7 +69,7 @@ function Reviews() {
             </div>
           </div>
         ))}
-      </div> */}
+      </div>
 
       <div className="add-review-wrapper">
         <Link to="/AddReview">

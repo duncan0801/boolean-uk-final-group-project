@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
 function Header() {
   const classes = useStyles();
   const loggedinUser = useStore((state) => state.loggedinUser);
-  console.log("header user", loggedinUser);
 
   return (
     <header>

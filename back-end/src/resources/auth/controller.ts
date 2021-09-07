@@ -18,7 +18,12 @@ export const loginUser = async (req: Request, res: Response) => {
 
     res.cookie("token", token, { httpOnly: true });
 
-    res.json({ data: { username: loggedUser.username } });
+    res.json({
+      data: {
+        id: loggedUser.id,
+        username: loggedUser.username,
+      },
+    });
   } catch (error) {
     res.status(401).json({ error });
   }
