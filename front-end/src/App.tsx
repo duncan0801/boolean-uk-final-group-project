@@ -19,6 +19,7 @@ import Reviews from "./pages/Reviews";
 import FAQ from "./pages/FAQ";
 import useStore from "./store";
 import AddReview from "./pages/AddReview";
+import AppointmentSuccess from "./pages/AppointmentSuccess";
 
 function App() {
   const loggedinUser = useStore((state) => state.loggedinUser);
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route path="/user/:id">
             <User />
+          </Route>
+          <Route path="/bookings/counsellor/booking-success/:id">
+            <AppointmentSuccess />
           </Route>
           <Route path="/bookings/counsellor/:id">
             <Appointments />
