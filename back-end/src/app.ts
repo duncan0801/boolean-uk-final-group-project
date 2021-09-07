@@ -4,6 +4,14 @@ const logger = require("morgan");
 const cors = require("cors");
 import { Request, Response } from "express-serve-static-core";
 
+declare global {
+  namespace Express {
+    interface Request {
+      currentUserId: number;
+    }
+  }
+}
+
 //Import Routes
 import usersRouter from "./resources/users/router";
 import counsellorRouter from "./resources/counsellors/router";
@@ -14,6 +22,8 @@ import reviewsRouter from "./resources/reviews/router";
 import appointmentsRouter from "./resources/appointments/router";
 import CounsellorOnServiceRouter from "./resources/CounsellorOnServiceRouter/router";
 import authRouter from "./resources/auth/router";
+import loginAuth from "./middlewares/loginAuth";
+import { JwtPayload } from "jsonwebtoken";
 
 const app = express();
 
@@ -25,10 +35,11 @@ app.use(cookieParser());
 //Routes
 app.use(authRouter);
 app.use("/user", usersRouter);
+app.use("/faq", faqRouter);
+app.use(loginAuth);
+app.use("/services", servicesRouter);
 app.use("/counsellors", counsellorRouter);
 app.use("/messages", messagesRouter);
-app.use("/faq", faqRouter);
-app.use("/services", servicesRouter);
 app.use("/appointments", appointmentsRouter);
 app.use("/reviews", reviewsRouter);
 app.use("/counsellor-on-service", CounsellorOnServiceRouter);

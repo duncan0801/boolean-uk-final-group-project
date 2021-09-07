@@ -23,6 +23,17 @@ const specialtiesList = [
 	"Stress",
 	"Trauma",
 ];
+
+const languagesList = [
+	"English",
+	"Spanish",
+	"French",
+	"Italian",
+	"Russian",
+	"Portuguese",
+	"German",
+	"Korean",
+];
 const hourlyRates = [40, 50, 60, 70, 80];
 const numberOfUsers = 5;
 const numberOfCounsellors = 5;
@@ -62,7 +73,7 @@ function generateUser(user_ID) {
 	const firstName = faker.name.firstName();
 	const lastName = faker.name.lastName();
 	const avatar = faker.image.avatar();
-	const userName =
+	const username =
 		firstName + faker.datatype.number() + faker.datatype.number();
 	const password = faker.internet.password();
 	const counsellor_ID = randomNumberGenerator(1, 20);
@@ -74,7 +85,7 @@ function generateUser(user_ID) {
 		firstName,
 		lastName,
 		avatar,
-		userName,
+		username: username,
 		password,
 		counsellor_ID,
 		// messages,
@@ -89,12 +100,12 @@ function generateCounsellor() {
 	const about = faker.lorem.paragraph();
 	const licensing = faker.lorem.words();
 	const yearsExperience = randomNumberGenerator(3, 20);
-    const gender = "male"
-	// let specialties = [];
-	// for (const number of new Array(5)) {
-	// 	const randomNumber = randomNumberGenerator(0, 18);
-	// 	specialties.push(specialtiesList[randomNumber]);
-	// }
+	const gender = "male";
+	let specialties = [];
+	for (const number of new Array(5)) {
+		const randomNumber = randomNumberGenerator(0, 18);
+		specialties.push(specialtiesList[randomNumber]);
+	}
 	const hourlyRate = hourlyRates[randomNumberGenerator(0, 4)];
 
 	return {
@@ -103,9 +114,9 @@ function generateCounsellor() {
 		avatar,
 		about,
 		licensing,
-        yearsExperience,
-        gender,
-		// specialties,
+		yearsExperience,
+		gender,
+		specialties,
 		hourlyRate,
 	};
 }
@@ -130,6 +141,10 @@ function generateFAQs() {
 		});
 	}
 	return FAQs;
+}
+
+function generateLanguages() {
+	return null;
 }
 function generateReview() {
 	// date
@@ -158,23 +173,54 @@ async function main() {
 		});
 	}
 
-	//GENERATE SPECIALTIES/ SERVICES
+	// //GENERATE SPECIALTIES/ SERVICES
+	let specialties = [];
 	for (const specialty of specialtiesList) {
-		await seedingClient.service.create({
+		let createdSpecialty = await seedingClient.service.create({
 			data: { name: specialty },
 		});
+		specialties.push(createdSpecialty);
+	}
+
+	// GENERATE LANGUAGES
+	let createdLanguages = [];
+	for (const language of languagesList) {
+		const createdLanguage = await seedingClient.language.create({
+			data: {
+				language: language,
+			},
+		});
+		createdLanguages.push(createdLanguage);
 	}
 	// GENERATE COUNSELLORS
 	let createdCounsellors = [];
 	for (let i = 1; i <= numberOfCounsellors; i++) {
-		const counsellor = generateCounsellor();
-		createdCounsellors.push(
-			await seedingClient.counsellor.create({
-				data: {
-					...counsellor,
+		const { specialties, ...counsellor } = generateCounsellor();
+		let createdCounsellor = await seedingClient.counsellor.create({
+			data: {
+				...counsellor,
+				languages: {
+					connect: [
+						{
+							id: createdLanguages[
+								randomNumberGenerator(1, languagesList.length)
+							].id,
+						},
+						{
+							id: createdLanguages[
+								randomNumberGenerator(1, languagesList.length)
+							].id,
+						},
+						{
+							id: createdLanguages[
+								randomNumberGenerator(1, languagesList.length)
+							].id,
+						},
+					],
 				},
-			})
-		);
+			},
+		});
+		createdCounsellors.push(createdCounsellor);
 	}
 
 	//GENERATE USERS
@@ -263,13 +309,14 @@ async function main() {
 	// 		console.log(review);
 	// 	}
 	// }
+	console.log(randomNumberGenerator(1, 20));
 }
 
 main()
 	.catch((e) => {
 		console.error(e);
-		process.exit(1);
 	})
 	.finally(async () => {
 		await seedingClient.$disconnect();
+		process.exit();
 	});

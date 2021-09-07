@@ -18,6 +18,7 @@ import Chat from "./pages/Chat";
 import Reviews from "./pages/Reviews";
 import FAQ from "./pages/FAQ";
 import useStore from "./store";
+import AddReview from "./pages/AddReview";
 
 function App() {
   // const [loggedinUser, setLoggedinUser] = useState({
@@ -30,7 +31,7 @@ function App() {
   //   counsellor_ID: 1,
   // });
   const loggedinUser = useStore((state) => state.loggedinUser);
-  console.log(loggedinUser);
+  console.log("app user", loggedinUser);
 
   return (
     <div className="app">
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route path="/reviews">
             <Reviews />
+          </Route>
+          <Route path="/add-review">
+            <AddReview />
           </Route>
           <Route path="/chat/user:id">
             <Chat />

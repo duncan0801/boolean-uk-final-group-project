@@ -3,12 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const authGenerator_1 = require("../utils/authGenerator");
 exports.default = (req, res, next) => {
     const token = req.cookies.token;
-    let userData = null;
+    let payload = null;
     if (token) {
-        userData = (0, authGenerator_1.validateToken)(token);
+        payload = (0, authGenerator_1.validateToken)(token);
     }
-    if (userData) {
-        req.currentUser = userData;
+    if (payload) {
+        //create new property and store payload in it
+        req.currentUserId = payload.id;
+        //continue normal go through rutes
         next();
     }
     else {
