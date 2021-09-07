@@ -17,7 +17,7 @@ const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const bcrypt_1 = require("bcrypt");
 const findUserWithValidation = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const foundUser = yield dbClient_1.default.user.findUnique({
-        where: { userName: userData.userName },
+        where: { username: userData.username },
     });
     if (!foundUser)
         throw new Error("Username/Password incorrect");
