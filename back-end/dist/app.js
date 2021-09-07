@@ -26,12 +26,12 @@ app.use(cookieParser());
 app.use(router_8.default);
 app.use("/user", router_1.default);
 app.use("/faq", router_4.default);
-app.use(loginAuth_1.default);
 app.use("/services", router_5.default);
 app.use("/counsellors", router_2.default);
+app.use("/reviews", router_6.default);
+app.use(loginAuth_1.default);
 app.use("/messages", router_3.default);
 app.use("/appointments", router_7.default);
-app.use("/reviews", router_6.default);
 app.all("*", (req, res) => {
     res.status(404).json("No route match");
 });
