@@ -1,0 +1,20 @@
+main {
+  display: grid;
+  place-items: center;
+}
+
+form.appointments {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 2rem;
+}
+
+div.available-appointments {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1rem;
+}
+
+div.appointment-time {
+  border: gray;
+}

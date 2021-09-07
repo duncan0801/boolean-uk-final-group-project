@@ -12,7 +12,12 @@ export type NewCounsellor = {
 
 export const getCounsellors = async (req: Request, res: Response) => {
   try {
-    const counsellors = await dbClient.counsellor.findMany();
+    const counsellors = await dbClient.counsellor.findMany({
+      include: {
+        languages: true,
+        specialties: true,
+      },
+    });
     res.json({ data: counsellors });
   } catch (error) {
     res.json({ error });

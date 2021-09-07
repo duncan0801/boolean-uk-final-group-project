@@ -16,7 +16,12 @@ exports.updateCounsellor = exports.addCounsellor = exports.getById = exports.get
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 const getCounsellors = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const counsellors = yield dbClient_1.default.counsellor.findMany();
+        const counsellors = yield dbClient_1.default.counsellor.findMany({
+            include: {
+                languages: true,
+                specialties: true,
+            },
+        });
         res.json({ data: counsellors });
     }
     catch (error) {
