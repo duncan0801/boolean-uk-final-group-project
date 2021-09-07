@@ -23,7 +23,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             id: loggedUser.id,
         });
         res.cookie("token", token, { httpOnly: true });
-        res.json({ data: { username: loggedUser.userName } });
+        res.json({ data: { username: loggedUser.username } });
     }
     catch (error) {
         res.status(401).json({ error });
@@ -47,7 +47,7 @@ function validateLoggedInToken(req, res) {
                     id: parseInt(tokenPayload.id),
                 },
                 select: {
-                    userName: true,
+                    username: true,
                 },
             });
             res.json({ data: userData });
