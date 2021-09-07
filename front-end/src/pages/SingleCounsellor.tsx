@@ -13,8 +13,6 @@ function SingleCounsellor() {
     const fetchCounsellorById = useStore((state) => state.fetchCounsellorById);
 
     const {id}: {id:string} = useParams();
-    console.log(id)
-
 
 	useEffect(() => {
         fetchCounsellorById(id)
@@ -23,8 +21,6 @@ function SingleCounsellor() {
 	if (!counsellor) {
 		return <h2>loading...</h2>;
 	}
-
-    console.log(counsellor)
 
     return (
         <main>
@@ -45,8 +41,8 @@ function SingleCounsellor() {
                     <h3 className="single-counsellor-subtitle">About me</h3>
                     <p>{counsellor.about}</p>
                 </section>
-                <Link to="/bookings/counsellor:id">
-                <button className="link-to-counsellor">Work with me</button>
+                <Link to={`/bookings/counsellor/${counsellor.id}`}>
+                    <button className="link-to-counsellor">Work with me</button>
                 </Link>
                 <section className="single-counsellor-specialties">
                     <h3 className="single-counsellor-subtitle">Specialties</h3>
