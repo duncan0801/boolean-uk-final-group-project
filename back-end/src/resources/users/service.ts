@@ -8,7 +8,7 @@ export type NewUser = {
   firstName: string;
   lastName: string;
   avatar: string;
-  counsellor_ID?: number;
+  counsellor_ID?: number | undefined;
 };
 
 const createWithHash = async (newUser: NewUser) => {

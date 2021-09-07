@@ -2,7 +2,7 @@ import "../styles/counsellor.css"
 import { Counsellor } from "../store";
 import useStore from "../store"
 import { useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 
 type SingleCounsellorProps = {
     counsellor: Counsellor
@@ -12,7 +12,7 @@ function SingleCounsellor() {
     let counsellor = useStore((state) => state.counsellor);
     const fetchCounsellorById = useStore((state) => state.fetchCounsellorById);
 
-    const {id}: {id:string}= useParams();
+    const {id}: {id:string} = useParams();
     console.log(id)
 
 
@@ -45,7 +45,9 @@ function SingleCounsellor() {
                     <h3 className="single-counsellor-subtitle">About me</h3>
                     <p>{counsellor.about}</p>
                 </section>
+                <Link to="/bookings/counsellor:id">
                 <button className="link-to-counsellor">Work with me</button>
+                </Link>
                 <section className="single-counsellor-specialties">
                     <h3 className="single-counsellor-subtitle">Specialties</h3>
                     <p>{counsellor.specialties}</p>
