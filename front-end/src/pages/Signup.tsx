@@ -30,8 +30,8 @@ function Signup() {
     e.preventDefault();
 
     const signUpDetails = {
-      firstname: firstname,
-      lastname: lastname,
+      firstName: firstname,
+      lastName: lastname,
       username: username,
       password: password,
       avatar: avatar,
@@ -52,7 +52,12 @@ function Signup() {
           throw Error("Failed to add new user");
         }
       })
-      .then((newUser) => console.log(newUser))
+      .then((newUser) => {
+        console.log(newUser);
+        alert(
+          `Thank you ${newUser.data.username} Your account has been created! Please login to complete autorization.`
+        );
+      })
       .catch((error) => console.error(error));
   }
 
@@ -62,25 +67,47 @@ function Signup() {
 
       <div className="sign-up-form-wrapper">
         <form
-          onSubmit={(e) => signUp(e)}
+          // onSubmit={(e) => signUp(e)}
           className="sign-up-form"
           noValidate
           autoComplete="off"
         >
           <div className="first-last-names-form ">
-            <TextField id="firstname" label="Name" variant="outlined" />
-            <TextField id="lastname" label="Surname" variant="outlined" />
+            <TextField
+              onChange={(e) => setFirstname(e.target.value)}
+              id="firstName"
+              label="Name"
+              variant="outlined"
+            />
+            <TextField
+              onChange={(e) => setLastname(e.target.value)}
+              id="lastName"
+              label="Surname"
+              variant="outlined"
+            />
           </div>
           <TextField
+            onChange={(e) => setUsername(e.target.value)}
             id="username"
             label="username"
             variant="outlined"
             placeholder="Username"
           />
-          <TextField id="password" label="password" variant="outlined" />
-          <TextField id="avatar" label="avatar" variant="outlined" />
+          <TextField
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            label="password"
+            type="password"
+            variant="outlined"
+          />
+          <TextField
+            onChange={(e) => setAvatar(e.target.value)}
+            id="avatar"
+            label="avatar"
+            variant="outlined"
+          />
           <div className="sign-up-button-wrapper">
-            <button className="sign-up-button">
+            <button onClick={(e) => signUp(e)} className="sign-up-button">
               <Link to="/login" className="get-started-link">
                 Get started
               </Link>

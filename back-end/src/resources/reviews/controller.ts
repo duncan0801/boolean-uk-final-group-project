@@ -23,6 +23,9 @@ export const addReview = async (req: Request, res: Response) => {
       data: {
         ...newReview,
       },
+      include: {
+        user: true,
+      },
     });
     res.json({ data: createdReview });
   } catch (error) {

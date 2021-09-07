@@ -34,6 +34,9 @@ const addReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const createdReview = yield dbClient_1.default.review.create({
             data: Object.assign({}, newReview),
+            include: {
+                user: true,
+            },
         });
         res.json({ data: createdReview });
     }
