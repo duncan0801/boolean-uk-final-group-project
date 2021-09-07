@@ -3,6 +3,7 @@ import { hash } from "bcrypt";
 import { compare } from "bcrypt";
 
 export type NewUser = {
+
 	username: string;
 	password: string;
 	firstName: string;
