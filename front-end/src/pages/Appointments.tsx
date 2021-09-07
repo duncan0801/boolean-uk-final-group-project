@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import { useState } from "react"
 import { useParams } from "react-router-dom"
@@ -11,12 +12,20 @@ import { DatePicker } from "@material-ui/pickers";
 import "../styles/appointments.css"
 
 >>>>>>> 18d15cf21be3bb5043a7dc86cf8a5e0e380313a6
+=======
+import React from "react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import LuxonUtils from "@date-io/luxon";
+import { DatePicker } from "@material-ui/pickers";
+import "../styles/appointments.css";
+>>>>>>> 493cd7e5a3424318e38487f32e13e7f607348211
 
 function Appointments() {
-    const [selectedDate, handleDateChange] = useState(new Date());
+	const [selectedDate, handleDateChange] = useState(new Date());
 
-    const {id}: {id:string} = useParams();
-
+<<<<<<< HEAD
     return (
         <main className="appointments">
 <<<<<<< HEAD
@@ -63,6 +72,34 @@ function Appointments() {
             </form>
         </main>
     )
+=======
+	const { id }: { id: string } = useParams();
+
+	return (
+		<main className="appointments">
+			<h2>Make an appointment</h2>
+			<form className="select-appointment">
+				<div className="date-picker">
+					<MuiPickersUtilsProvider utils={LuxonUtils}>
+						<DatePicker
+							value={selectedDate}
+							onChange={handleDateChange}
+							animateYearScrolling
+						/>
+					</MuiPickersUtilsProvider>
+				</div>
+				<div className="available-appointments">
+					<button className="appointment-time">9:00</button>
+					<button className="appointment-time">11:00</button>
+					<button className="appointment-time">15:00</button>
+					<button className="appointment-time">16:00</button>
+					<button className="appointment-time">17:00</button>
+					<button className="appointment-time">18:00</button>
+				</div>
+			</form>
+		</main>
+	);
+>>>>>>> 493cd7e5a3424318e38487f32e13e7f607348211
 }
 
-export default Appointments
+export default Appointments;
