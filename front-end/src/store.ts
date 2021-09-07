@@ -12,7 +12,7 @@ export type User = {
   firstName: string;
   lastName: string;
   avatar: string;
-  userName: string;
+  username: string;
   password: string;
   counsellor_ID?: number;
   appointments?: Appointment[];
@@ -173,7 +173,7 @@ const useStore = create<Store>(
         .then((entity) => set({ languages: entity.data }));
     },
     fetchReviews: () => {
-      fetch("http://localhost:4000/reviews")
+      fetch("http://localhost:4000/reviews", { credentials: "include" })
         .then((res) => res.json())
         .then((entity) => set({ reviews: entity.data }));
     },

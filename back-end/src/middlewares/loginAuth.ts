@@ -3,14 +3,16 @@ import { validateToken } from "../utils/authGenerator";
 
 export default (req: Request | any, res: Response, next: NextFunction) => {
   const token = req.cookies.token;
-  let userData = null;
+  let payload = null;
 
   if (token) {
-    userData = validateToken(token);
+    payload = validateToken(token);
   }
 
-  if (userData) {
-    req.currentUser = userData;
+  if (payload) {
+    //create new property and store payload in it
+    req.currentUserId = (payload as any).id;
+    //continue normal go through rutes
     next();
   } else {
     res
