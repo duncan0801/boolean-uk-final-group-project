@@ -1,0 +1,32 @@
+main {
+  display: grid;
+  place-items: center;
+}
+
+form.select-appointment {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 2rem;
+}
+
+div.available-appointments {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2rem;
+}
+
+button.appointment-time {
+  display: grid;
+  place-items: center;
+  border: solid gray 1px;
+  border-radius: 10px;
+  padding: 5%;
+}
+
+button.appointment-time:hover {
+  background-color: gray;
+}
+
+button.appointment-time:active {
+  background-color: blueviolet;
+}
