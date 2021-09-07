@@ -10,7 +10,7 @@ router.route("/login").post(loginUser);
 
 router.route("/logout").get(logoutUser);
 
-router.route("/signup").post(createUser);
+// router.route("/signup").
 
 router.route("/validate-token").get(validateLoggedInToken);
 

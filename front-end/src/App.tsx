@@ -22,17 +22,7 @@ import AddReview from "./pages/AddReview";
 import AppointmentSuccess from "./pages/AppointmentSuccess";
 
 function App() {
-  // const [loggedinUser, setLoggedinUser] = useState({
-  //   firstName: "Jane",
-  //   lastName: "Summers",
-  //   avatar:
-  //     "https://images.pexels.com/photos/7955853/pexels-photo-7955853.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-  //   userName: "Lola15",
-  //   password: "test",
-  //   counsellor_ID: 1,
-  // });
   const loggedinUser = useStore((state) => state.loggedinUser);
-  console.log("app user", loggedinUser);
 
   return (
     <div className="app">
@@ -54,7 +44,7 @@ function App() {
           <Route path="/add-review">
             <AddReview />
           </Route>
-          <Route path="/chat/user:id">
+          <Route path="/chat/user/:id">
             <Chat />
           </Route>
           <Route path="/user/:id">
@@ -76,7 +66,11 @@ function App() {
             <Signup />
           </Route>
           <Route exact path="/login">
-            {loggedinUser ? <Redirect to="/home" /> : <Login />}
+            {loggedinUser ? (
+              <Redirect to={`user/${loggedinUser.id}`} />
+            ) : (
+              <Login />
+            )}
           </Route>
         </Switch>
       </main>

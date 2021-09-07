@@ -5,11 +5,11 @@ const cors = require("cors");
 import { Request, Response } from "express-serve-static-core";
 
 declare global {
-  namespace Express {
-    interface Request {
-      currentUserId: number;
-    }
-  }
+	namespace Express {
+		interface Request {
+			currentUserId: number;
+		}
+	}
 }
 
 //Import Routes
@@ -44,7 +44,7 @@ app.use("/messages", messagesRouter);
 app.use("/appointments", appointmentsRouter);
 
 app.all("*", (req: Request, res: Response) => {
-  res.status(404).json("No route match");
+	res.status(404).json("No route match");
 });
 
 module.exports = app;

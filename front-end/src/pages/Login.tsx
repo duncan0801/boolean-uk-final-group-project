@@ -23,16 +23,14 @@ function Login() {
   const classes = useStyles();
   const loggedinUser = useStore((state) => state.loggedinUser);
   const setLoggedinUser = useStore((state) => state.setLoggedinUser);
-  const [userName, setuserName] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-
-  console.log("login user", loggedinUser);
 
   function onLogin(e: any) {
     e.preventDefault();
 
     const loginDetails = {
-      userName,
+      username,
       password,
     };
 
@@ -73,7 +71,7 @@ function Login() {
           autoComplete="off"
         >
           <TextField
-            onChange={(e) => setuserName(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             id="userName"
             label="username"
             variant="outlined"

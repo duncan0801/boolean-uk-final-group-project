@@ -1,19 +1,49 @@
 import React, { useState } from "react";
+
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import useStore from "../store";
 import "../styles/addReview.css";
-
-type Review = {
-  id: number;
-  date: string;
-  content: string;
-  user_ID: number;
-  counsellor_ID: number;
-};
+import { userInfo } from "os";
 
 function AddReview() {
+  const user = useStore((state) => state.user);
+  const [date, setDate] = useState<string | null>(null);
+  const [content, setContent] = useState<string | null>(null);
+  const reviews = useStore((state) => state.reviews);
+  const setReviews = useStore((state) => state.setReviews);
+
+  if (!user) {
+    return <>Loading..</>;
+  }
+
+  function postReview(e: any) {
+    e.preventDefault();
+
+    const newReview = {
+      date: date,
+      content: content,
+      user_ID: user?.id,
+      counsellor_ID: user?.counsellor_ID,
+    };
+
+    fetch("http://localhost:4000/reviews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newReview),
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw Error("Failed to add review");
+      }
+    });
+
+    return null;
+  }
   return (
     <section className="add-review-container">
       <div className="top-addRevie-page">
@@ -24,13 +54,13 @@ function AddReview() {
       </div>
       <div className="addReview-form-wrapper">
         <form
-          // onSubmit={(e) => onLogin(e)}
+          // onSubmit={(e) => onSubmit(e)}
           className="add-review-form"
           noValidate
           autoComplete="off"
         >
           <TextField
-            // onChange={(e) => setuserName(e.target.value)}
+            onChange={(e) => setDate(e.target.value)}
             id="date"
             label="date"
             variant="outlined"
@@ -40,9 +70,9 @@ function AddReview() {
             rows="1"
           />
           <TextField
-            // onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setContent(e.target.value)}
             id="content"
-            label="Content"
+            label="content"
             variant="outlined"
             placeholder="What did you think?"
             fullWidth
@@ -50,7 +80,14 @@ function AddReview() {
             rows="9"
           />
           <div className="post-review-wrapper">
-            <button className="post-review-button">Post</button>
+            <Link to="/reviews">
+              <button
+                onClick={(e) => postReview(e)}
+                className="post-review-button"
+              >
+                Post
+              </button>
+            </Link>
           </div>
         </form>
       </div>

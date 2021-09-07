@@ -1,6 +1,7 @@
 const faker = require("faker");
 //import { PrismaClient } from "@prisma/client";
 const { PrismaClient } = require("@prisma/client");
+const { connect } = require("http2");
 const seedingClient = new PrismaClient();
 
 const specialtiesList = [
@@ -174,12 +175,12 @@ async function main() {
 	}
 
 	// //GENERATE SPECIALTIES/ SERVICES
-	let specialties = [];
+	let createdSpecialties = [];
 	for (const specialty of specialtiesList) {
 		let createdSpecialty = await seedingClient.service.create({
 			data: { name: specialty },
 		});
-		specialties.push(createdSpecialty);
+		createdSpecialties.push(createdSpecialty);
 	}
 
 	// GENERATE LANGUAGES
@@ -203,17 +204,70 @@ async function main() {
 					connect: [
 						{
 							id: createdLanguages[
-								randomNumberGenerator(1, languagesList.length)
+								randomNumberGenerator(
+									0,
+									languagesList.length - 1
+								)
 							].id,
 						},
 						{
 							id: createdLanguages[
-								randomNumberGenerator(1, languagesList.length)
+								randomNumberGenerator(
+									0,
+									languagesList.length - 1
+								)
 							].id,
 						},
 						{
 							id: createdLanguages[
-								randomNumberGenerator(1, languagesList.length)
+								randomNumberGenerator(
+									0,
+									languagesList.length - 1
+								)
+							].id,
+						},
+					],
+				},
+				specialties: {
+					connect: [
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
+							].id,
+						},
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
+							].id,
+						},
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
+							].id,
+						},
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
+							].id,
+						},
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
 							].id,
 						},
 					],
@@ -224,6 +278,62 @@ async function main() {
 	}
 
 	//GENERATE USERS
+	let createdUsers = [];
+
+	const user1 = await seedingClient.user.create({
+		data: {
+			firstName: "Shahon",
+			lastName: "Blaley",
+			avatar: "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+			username: "stranger123",
+			password: "test",
+			counsellor_ID: 2,
+		},
+	});
+	createdUsers.push(user1);
+
+	const user2 = await seedingClient.user.create({
+		data: {
+			firstName: "Alex",
+			lastName: "Davey",
+			avatar: "https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+			username: "catperson77",
+			password: "test",
+			counsellor_ID: 1,
+		},
+	});
+	createdUsers.push(user2);
+
+	//GENERATE MESSAGES
+	let createdMessages = [];
+
+	for (const user of createdUsers) {
+		let i = 1;
+		await seedingClient.message.create({
+			data: {
+				date: "07/09/2021",
+				content:
+					"Hello, looking forward to starting counselling with you.",
+				user: { connect: { id: user.id } },
+				conversation: {
+					create: {
+						user_ID: user.id,
+						counsellor_ID: i,
+					},
+				},
+			},
+		});
+		// await seedingClient.message.create({
+		// 	data: {
+		// 		date: "07/09/2021",
+		// 		content:
+		// 			"Hello, looking forward to starting with you too. We'll start things off during our next appointment.",
+		// 		counsellor: { connect: { id: user.counsellor_ID } },
+		// 		conversation: { include: { id: i } },
+		// 	},
+		// });
+		// i = i + 1;
+	}
 	// let createdUsers = [];
 	// for (let i = 1; i <= numberOfUsers; i++) {
 	// 	const user = generateUser(i);

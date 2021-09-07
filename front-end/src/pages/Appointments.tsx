@@ -6,6 +6,7 @@ import LuxonUtils from '@date-io/luxon';
 import { DatePicker } from "@material-ui/pickers";
 import "../styles/appointments.css"
 
+
 function Appointments() {
     const [selectedDate, handleDateChange] = useState(new Date());
 
@@ -31,6 +32,8 @@ function Appointments() {
                     <button className="appointment-time">16:00</button>
                     <button className="appointment-time">17:00</button>
                     <button className="appointment-time">18:00</button>
+
+           
                 </div>
             </form>
         </main>

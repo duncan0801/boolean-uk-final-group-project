@@ -29,4 +29,9 @@ button.appointment-time:hover {
 
 button.appointment-time:active {
   background-color: blueviolet;
+  gap: 1rem;
+}
+
+div.appointment-time {
+  border: gray;
 }
