@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState } from "react"
-<<<<<<< Updated upstream
 import { useParams } from "react-router-dom"
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import LuxonUtils from '@date-io/luxon';
