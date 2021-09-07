@@ -32,6 +32,12 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             where: {
                 id,
             },
+            include: {
+                appointments: true,
+                messages: true,
+                reviews: true,
+                Conversation: true,
+            },
         });
         res.json({ data: user });
     }
@@ -47,6 +53,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.json({ data: savedUser });
     }
     catch (error) {
+        console.error(error);
         res.json({ error });
     }
 });
