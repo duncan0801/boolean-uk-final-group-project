@@ -3,29 +3,29 @@ import { hash } from "bcrypt";
 import { compare } from "bcrypt";
 
 export type NewUser = {
-  userName: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  avatar: string;
-  counsellor_ID?: number;
+	username: string;
+	password: string;
+	firstName: string;
+	lastName: string;
+	avatar: string;
+	counsellor_ID?: number;
 };
 
 const createWithHash = async (newUser: NewUser) => {
-  const plainTextPassword = newUser.password;
+	const plainTextPassword = newUser.password;
 
-  const hashedPassword = await hash(plainTextPassword, 10);
+	const hashedPassword = await hash(plainTextPassword, 10);
 
-  const savedUser = await dbClient.user.create({
-    data: { ...newUser, password: hashedPassword },
-  });
+	const savedUser = await dbClient.user.create({
+		data: { ...newUser, password: hashedPassword },
+	});
 
-  return savedUser;
+	return savedUser;
 };
 
 const userClient = {
-  ...dbClient.user,
-  createWithHash,
+	...dbClient.user,
+	createWithHash,
 };
 
 export default userClient;
