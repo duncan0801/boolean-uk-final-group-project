@@ -104,7 +104,7 @@ type Store = {
   user: User | null;
   setUser: (user: User) => void;
   loggedinUser: loggedinUser | null;
-  setLoggedinUser: (loggedinUser: User) => void;
+  setLoggedinUser: (loggedinUser: User | null) => void;
   languages: Language[] | null;
   setLanguages: (languages: Language[]) => void;
   reviews: Review[] | null;

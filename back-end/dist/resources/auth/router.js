@@ -6,7 +6,6 @@ const router = (0, express_1.Router)();
 // login
 router.route("/login").post(controller_1.loginUser);
 router.route("/logout").get(controller_1.logoutUser);
-// router.route("/signup").
 router.route("/validate-token").get(controller_1.validateLoggedInToken);
 // logout??
 exports.default = router;

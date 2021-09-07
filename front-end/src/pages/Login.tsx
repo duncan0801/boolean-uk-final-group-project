@@ -80,6 +80,7 @@ function Login() {
           <TextField
             onChange={(e) => setPassword(e.target.value)}
             id="password"
+            type="password"
             label="password"
             variant="outlined"
           />

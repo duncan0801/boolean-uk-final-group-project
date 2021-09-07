@@ -6,7 +6,12 @@ import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Link, Redirect } from "react-router-dom";
-import useStore from "../store";
+import useStore, { User } from "../store";
+
+// type Props = {
+//   loggedUser: User | null;
+//   setLoggedinUser: (data: null) => void;
+// };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +26,30 @@ const useStyles = makeStyles((theme: Theme) =>
 function Header() {
   const classes = useStyles();
   const loggedinUser = useStore((state) => state.loggedinUser);
+  const setLoggedinUser = useStore((state) => state.setLoggedinUser);
+
+  function logOut() {
+    fetch("http://localhost:4000/logout", {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify(),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw Error("Failed to logout");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        setLoggedinUser(null);
+      })
+      .catch((error) => console.error(error));
+  }
 
   return (
     <header>
@@ -49,8 +78,8 @@ function Header() {
       <div></div>
       <nav>
         <ul className="header-ul">
-          <Link to="/services" className="header-links">
-            <h3 className="main-nav-heading">Services</h3>
+          <Link to="/home" className="header-links">
+            <h3 className="main-nav-heading">Home</h3>
           </Link>
           <Link to="/counsellors" className="header-links">
             <h3 className="main-nav-heading">Counsellors</h3>
@@ -65,15 +94,27 @@ function Header() {
       </nav>
       <div className="login-logout">
         {loggedinUser ? (
-          `Hello ${loggedinUser.username} | `
+          <>
+            {`Hello ${loggedinUser.username}`}
+            <Link to={`/user/${loggedinUser.id}`}>
+              <button className="link-to-user-page">user</button>
+            </Link>
+          </>
         ) : (
           <Link to="/login" className="header-links log-in">
             log in
           </Link>
         )}
         {loggedinUser ? (
-          <Link to="/" className="header-links log-out">
-            Log out
+          <Link to="/logout">
+            <button
+              onClick={(_e) => {
+                logOut();
+              }}
+              className="header-links log-out"
+            >
+              Log out
+            </button>
           </Link>
         ) : (
           ""

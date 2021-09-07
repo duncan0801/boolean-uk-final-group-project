@@ -1,26 +1,29 @@
-import "../styles/counsellor-card.css"
+import "../styles/counsellor-card.css";
 import { Counsellor } from "../store";
-import { Link } from "react-router-dom"
-
+import { Link } from "react-router-dom";
 
 type CounsellorCardProps = {
-    counsellor: Counsellor
-}
+  counsellor: Counsellor;
+};
 
-function CounsellorCard({ counsellor }:  CounsellorCardProps ) {
-    return (
-        <Link to={`/counsellors/${counsellor.id}`}>
-
+function CounsellorCard({ counsellor }: CounsellorCardProps) {
+  return (
+    <>
+      <Link to={`/counsellors/${counsellor.id}`}>
         <article className="counsellor-card">
-            <img className="counsellor-image" src={counsellor.avatar}
-            alt={counsellor.firstName}/>
-            <h3 className="counsellor-name">{counsellor.firstName + " " + counsellor.lastName}</h3>
-            <h4>{counsellor.specialties}</h4>
+          <img
+            className="counsellor-image"
+            src={counsellor.avatar}
+            alt={counsellor.firstName}
+          />
+          <h3 className="counsellor-name">
+            {counsellor.firstName + " " + counsellor.lastName}
+          </h3>
+          <h4>{counsellor.specialties.map(({ name }) => name).join(", ")}</h4>
         </article>
-        </Link>
-
-       
-    )
+      </Link>
+    </>
+  );
 }
 
-export default CounsellorCard
+export default CounsellorCard;

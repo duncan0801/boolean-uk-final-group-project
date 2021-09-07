@@ -62,3 +62,8 @@ svg {
 .home-link {
   text-decoration: none;
 }
+
+.link-to-user-page {
+  margin-right: 15px;
+  margin-left: 10px;
+}
