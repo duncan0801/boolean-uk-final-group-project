@@ -174,12 +174,12 @@ async function main() {
 	}
 
 	// //GENERATE SPECIALTIES/ SERVICES
-	let specialties = [];
+	let createdSpecialties = [];
 	for (const specialty of specialtiesList) {
 		let createdSpecialty = await seedingClient.service.create({
 			data: { name: specialty },
 		});
-		specialties.push(createdSpecialty);
+		createdSpecialties.push(createdSpecialty);
 	}
 
 	// GENERATE LANGUAGES
@@ -203,17 +203,70 @@ async function main() {
 					connect: [
 						{
 							id: createdLanguages[
-								randomNumberGenerator(1, languagesList.length)
+								randomNumberGenerator(
+									0,
+									languagesList.length - 1
+								)
 							].id,
 						},
 						{
 							id: createdLanguages[
-								randomNumberGenerator(1, languagesList.length)
+								randomNumberGenerator(
+									0,
+									languagesList.length - 1
+								)
 							].id,
 						},
 						{
 							id: createdLanguages[
-								randomNumberGenerator(1, languagesList.length)
+								randomNumberGenerator(
+									0,
+									languagesList.length - 1
+								)
+							].id,
+						},
+					],
+				},
+				specialties: {
+					connect: [
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
+							].id,
+						},
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
+							].id,
+						},
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
+							].id,
+						},
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
+							].id,
+						},
+						{
+							id: createdSpecialties[
+								randomNumberGenerator(
+									0,
+									createdSpecialties.length - 1
+								)
 							].id,
 						},
 					],

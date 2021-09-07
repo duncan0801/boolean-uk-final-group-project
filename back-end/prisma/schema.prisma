@@ -69,13 +69,15 @@ model Review {
 }
 
 model Message {
-    id            Int        @id @default(autoincrement())
-    date          String
-    content       String
-    user_ID       Int
-    counsellor_ID Int
-    user          User       @relation(fields: [user_ID], references: [id])
-    counsellor    Counsellor @relation(fields: [counsellor_ID], references: [id])
+    id              Int        @id @default(autoincrement())
+    date            String
+    content         String
+    user_ID         Int
+    counsellor_ID   Int
+    conversation_ID
+    user            User       @relation(fields: [user_ID], references: [id])
+    counsellor      Counsellor @relation(fields: [counsellor_ID], references: [id])
+    conversation Int @relation(fields: [user_ID])
 }
 
 model Conversation {

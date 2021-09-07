@@ -35,6 +35,9 @@ function Home() {
 	const fetchCounsellors = useStore((state) => state.fetchCounsellors);
 	const history = useHistory();
 
+	console.log("counsellors:", counsellors);
+	console.log("services:", services);
+
 	useEffect(() => {
 		fetchServices();
 		fetchCounsellors();
@@ -134,7 +137,10 @@ function Home() {
 									<path d="m418 324.515625h-36.484375v-36.484375c0-8.28125-6.714844-15-15-15-8.28125 0-15 6.71875-15 15v36.484375h-36.480469c-8.285156 0-15 6.714844-15 15s6.714844 15 15 15h36.480469v36.480469c0 8.285156 6.71875 15 15 15 8.285156 0 15-6.714844 15-15v-36.480469h36.484375c8.285156 0 15-6.714844 15-15s-6.714844-15-15-15zm0 0" />
 								</g>
 							</svg>
-							<button className="create-account" onClick={handleCreateAccountButtonClick}>
+							<button
+								className="create-account"
+								onClick={handleCreateAccountButtonClick}
+							>
 								1. Create an account
 							</button>
 						</li>
