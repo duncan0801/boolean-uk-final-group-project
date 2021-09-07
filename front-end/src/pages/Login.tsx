@@ -26,7 +26,7 @@ function Login() {
   const [userName, setuserName] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
 
-  console.log(loggedinUser);
+  console.log("login user", loggedinUser);
 
   function onLogin(e: any) {
     e.preventDefault();
@@ -52,7 +52,7 @@ function Login() {
         }
       })
       .then((user) => {
-        setLoggedinUser(user);
+        setLoggedinUser(user.data);
       })
       .catch((error) => console.error(error));
   }
@@ -86,9 +86,6 @@ function Login() {
             variant="outlined"
           />
           <button className="login-button">Log in</button>
-          {/* <Button variant="contained" color="secondary">
-            Log in
-          </Button> */}
           <h3 className="logo-page-h3">
             Don't have an account?{" "}
             <Link to="/signup" className="logo-page-sign-up">

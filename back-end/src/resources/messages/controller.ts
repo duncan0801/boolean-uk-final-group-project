@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { Request, Response } from "express";
 import dbClient from "../../utils/dbClient";
 
@@ -9,12 +10,10 @@ import dbClient from "../../utils/dbClient";
 // };
 
 export const getMessagesByUserId = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-
   try {
     const messages = await dbClient.message.findMany({
       where: {
-        user_ID: id,
+        user_ID: req.currentUserId,
       },
     });
     res.json({ data: messages });

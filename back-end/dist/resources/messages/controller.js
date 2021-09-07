@@ -21,11 +21,10 @@ const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 //   counsellor_ID: number;
 // };
 const getMessagesByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = Number(req.params.id);
     try {
         const messages = yield dbClient_1.default.message.findMany({
             where: {
-                user_ID: id,
+                user_ID: req.currentUserId,
             },
         });
         res.json({ data: messages });

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "compile": "tsc && node ./bin/www || exit 1",
+    "compile": "npx tsc && node ./bin/www || exit 1",
     "start": "nodemon -e ts -x \"npm run compile\""
   },
   "dependencies": {

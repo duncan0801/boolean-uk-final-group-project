@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function Header() {
   const classes = useStyles();
   const loggedinUser = useStore((state) => state.loggedinUser);
-  console.log(loggedinUser);
+  console.log("header user", loggedinUser);
 
   return (
     <header>
@@ -66,7 +66,7 @@ function Header() {
       </nav>
       <div className="login-logout">
         {loggedinUser ? (
-          `Hello ${loggedinUser.userName} | `
+          `Hello ${loggedinUser.username} | `
         ) : (
           <Link to="/login" className="header-links log-in">
             log in

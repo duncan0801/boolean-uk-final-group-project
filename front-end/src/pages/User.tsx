@@ -24,8 +24,8 @@ function User() {
         </ul>
       </div>
       <div className="userPageLinks">
-        <Link to="/reviews" className="post-review">
-          Post a review
+        <Link to="/add-review" className="post-review">
+          Add a review
         </Link>
         <Link to="/reviews" className="message-counsellor">
           Message counsellor

@@ -1,5 +1,6 @@
 .user-section {
-  padding: 20px 0px 60px 60px;
+  padding-top: 60px;
+  padding-left: 60px;
   display: grid;
   grid-gap: 20px;
 }
@@ -21,11 +22,6 @@
 
 .user-img-and-username-div {
   display: flex;
-  /* display: grid;
-  width: 0.5fr;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-  align-items: center; */
 }
 
 .usernameuUserPage {
