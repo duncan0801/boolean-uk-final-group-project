@@ -20,7 +20,7 @@ import faqRouter from "./resources/faq/router";
 import servicesRouter from "./resources/services/router";
 import reviewsRouter from "./resources/reviews/router";
 import appointmentsRouter from "./resources/appointments/router";
-import CounsellorOnServiceRouter from "./resources/CounsellorOnServiceRouter/router";
+
 import authRouter from "./resources/auth/router";
 import loginAuth from "./middlewares/loginAuth";
 import { JwtPayload } from "jsonwebtoken";
@@ -42,7 +42,6 @@ app.use("/counsellors", counsellorRouter);
 app.use("/messages", messagesRouter);
 app.use("/appointments", appointmentsRouter);
 app.use("/reviews", reviewsRouter);
-app.use("/counsellor-on-service", CounsellorOnServiceRouter);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json("No route match");
