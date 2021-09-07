@@ -86,6 +86,11 @@ export type Appointment = {
   counsellor?: Counsellor;
 };
 
+export type loggedinUser = {
+  id: number;
+  username: string;
+};
+
 type Store = {
   faqs: Faq[] | null;
   setFaqs: (faqs: Faq[]) => void;
@@ -96,9 +101,9 @@ type Store = {
   setCounsellors: (counsellors: Counsellor[]) => void;
   counsellor: Counsellor | null;
   setCounsellor: (counsellor: Counsellor) => void;
-  users: User[] | null;
-  setUsers: (users: User[]) => void;
-  loggedinUser: User | null;
+  user: User | null;
+  setUser: (user: User) => void;
+  loggedinUser: loggedinUser | null;
   setLoggedinUser: (loggedinUser: User) => void;
   languages: Language[] | null;
   setLanguages: (languages: Language[]) => void;
@@ -113,7 +118,7 @@ type Store = {
   fetchServices: () => void;
   fetchCounsellors: () => void;
   fetchCounsellorById: (id: string) => void;
-  fetchUsers: () => void;
+  fetchUser: (loggedinUser: loggedinUser) => void;
   fetchLanguages: () => void;
   fetchReviews: () => void;
 };
@@ -129,8 +134,8 @@ const useStore = create<Store>(
     setCounsellors: (counsellors) => set({ counsellors: counsellors }),
     counsellor: null,
     setCounsellor: (counsellor) => set({ counsellor: counsellor }),
-    users: null,
-    setUsers: (users) => set({ users: users }),
+    user: null,
+    setUser: (user) => set({ user: user }),
     languages: null,
     setLanguages: (languages) => set({ languages: languages }),
     reviews: null,
@@ -162,10 +167,12 @@ const useStore = create<Store>(
         .then((res) => res.json())
         .then((counsellor) => set({ counsellor: counsellor.data }));
     },
-    fetchUsers: () => {
-      fetch("http://localhost:4000/users")
+    fetchUser: (loggedinUser) => {
+      fetch(`http://localhost:4000/user/${loggedinUser.id}`, {
+        credentials: "include",
+      })
         .then((res) => res.json())
-        .then((entity) => set({ counsellors: entity.data }));
+        .then((entity) => set({ user: entity.data }));
     },
     fetchLanguages: () => {
       fetch("http://localhost:4000/languages")

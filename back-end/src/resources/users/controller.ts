@@ -20,6 +20,12 @@ export const getUser = async (req: Request, res: Response) => {
       where: {
         id,
       },
+      include: {
+        appointments: true,
+        messages: true,
+        reviews: true,
+        Conversation: true,
+      },
     });
     res.json({ data: user });
   } catch (error) {
@@ -33,6 +39,7 @@ export const createUser = async (req: Request, res: Response) => {
     const savedUser = await userClient.createWithHash(newUser);
     res.json({ data: savedUser });
   } catch (error) {
+    console.error(error);
     res.json({ error });
   }
 };
