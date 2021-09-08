@@ -14,8 +14,6 @@ body {
 
 html {
 	font-family: Arial, Arial, Helvetica, sans-serif;
-
-	font-size: 10px;
 }
 
 .chat-wrapper {
@@ -26,7 +24,6 @@ html {
 		"chat-message-list chat-message-list" 1fr
 		"chat-form chat-form" 78px
 		/ 1fr 1fr;
-	grid-template-rows: ;
 	margin: 30px;
 	min-width: 800px;
 	max-width: 1000px;
