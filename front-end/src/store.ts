@@ -113,6 +113,8 @@ type Store = {
   setMessages: (messages: Message[]) => void;
   appointments: Appointment[] | null;
   setAppointments: (appointments: Appointment[]) => void;
+  serviceName: string[] | null;
+  setServiceName: (serviceName: string[]) => void;
 
   fetchFaqs: () => void;
   fetchServices: () => void;
@@ -121,13 +123,13 @@ type Store = {
   fetchUser: (loggedinUser: loggedinUser) => void;
   fetchLanguages: () => void;
   fetchReviews: () => void;
+  filterCounsellorsByService: () => Counsellor[] | null;
 };
 
 const useStore = create<Store>(
-  devtools((set) => ({
+  devtools((set, get) => ({
     faqs: null,
     setFaqs: (faqs) => set({ faqs: faqs }),
-
     services: null,
     setServices: (services) => set({ services: services }),
     counsellors: null,
@@ -146,6 +148,8 @@ const useStore = create<Store>(
     setAppointments: (appointments) => set({ appointments: appointments }),
     loggedinUser: null,
     setLoggedinUser: (loggedinUser) => set({ loggedinUser: loggedinUser }),
+    serviceName: null,
+    setServiceName: (serviceName) => set({ serviceName: serviceName }),
 
     fetchFaqs: () => {
       fetch("http://localhost:4000/faq")
@@ -183,6 +187,17 @@ const useStore = create<Store>(
       fetch("http://localhost:4000/reviews", { credentials: "include" })
         .then((res) => res.json())
         .then((entity) => set({ reviews: entity.data }));
+    },
+    filterCounsellorsByService: () => {
+      const serviceName = get().serviceName;
+      const counsellors = get().counsellors;
+      if (counsellors && serviceName) {
+        const filteredCounsellors = counsellors.filter(({ specialties }) =>
+          specialties.find((specialty) => serviceName.includes(specialty.name))
+        );
+        return filteredCounsellors;
+      }
+      return null;
     },
   }))
 );
