@@ -31,6 +31,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
+        console.error(error);
         res.status(401).json({ error });
     }
 });

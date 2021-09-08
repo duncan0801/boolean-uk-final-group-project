@@ -25,6 +25,7 @@ export const loginUser = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
+    console.error(error);
     res.status(401).json({ error });
   }
 };

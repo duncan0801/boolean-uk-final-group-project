@@ -15,7 +15,11 @@ type Review = {
 function Reviews() {
   const reviews = useStore((state) => state.reviews);
   const setReviews = useStore((state) => state.setReviews);
-  console.log(reviews);
+  const fetchReviews = useStore((state) => state.fetchReviews);
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
   if (!reviews) {
     return <h2>loading...</h2>;
@@ -59,8 +63,10 @@ function Reviews() {
               </div>
               <div className="counsellor-reviews-wrapper">
                 <h3 className="counsellor-reviews-name">
-                  {review.counsellor?.firstName} {review.counsellor?.lastName}{" "}
-                  -(More reviews)
+                  <Link to={`/counsellors/${review.counsellor?.id}`}>
+                    {review.counsellor?.firstName} {review.counsellor?.lastName}{" "}
+                    -(More reviews)
+                  </Link>
                 </h3>
                 <h4 className="counsellor-reviews-speciality">
                   {review.counsellor?.licensing}
@@ -69,12 +75,6 @@ function Reviews() {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="add-review-wrapper">
-        <Link to="/AddReview">
-          <button className="review-button">ADD REVIEW</button>
-        </Link>
       </div>
     </section>
   );
