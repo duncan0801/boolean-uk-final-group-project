@@ -20,8 +20,6 @@ function MessageComponent({ message }: { message: Message }) {
 	);
 }
 function Chat() {
-	const messages = useStore((state) => state.messages);
-	const setMessages = useStore((state) => state.setMessages);
 	const counsellor = useStore((state) => state.counsellor);
 	const messageField = useStore((state) => state.messageField);
 	const setMessageField = useStore((state) => state.setMessageField);
@@ -70,9 +68,25 @@ function Chat() {
 				</span>
 			</div>
 			<div className="chat-message-list">
-				{userMessages?.map((messageToShow) => {
+				{/* {userMessages?.map((messageToShow) => {
 					return <MessageComponent message={messageToShow} />;
-				})}
+				})} */}
+				<li className="message">
+					<img
+						className="profile-pic"
+						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi1.wp.com%2Fwww.rcovenant.org%2Fwp-content%2Fuploads%2F2008%2F02%2Fgeneric-profile-pic.png&f=1&nofb=1"
+						alt=""
+					/>
+					<p>Hello</p>
+				</li>
+				<li className="counsellor-message">
+					<img
+						className="profile-pic"
+						src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi1.wp.com%2Fwww.rcovenant.org%2Fwp-content%2Fuploads%2F2008%2F02%2Fgeneric-profile-pic.png&f=1&nofb=1"
+						alt=""
+					/>
+					<p className="message-content">Hello</p>
+				</li>
 			</div>
 			<div className="chat-form">
 				<form onSubmit={handleMessageSend}>
