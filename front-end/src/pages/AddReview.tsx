@@ -11,15 +11,13 @@ function AddReview() {
   const user = useStore((state) => state.user);
   const [date, setDate] = useState<string | null>(null);
   const [content, setContent] = useState<string | null>(null);
-  const reviews = useStore((state) => state.reviews);
-  const setReviews = useStore((state) => state.setReviews);
 
   if (!user) {
     return <>Loading..</>;
   }
 
   function postReview(e: any) {
-    e.preventDefault();
+    // e.preventDefault();
 
     const newReview = {
       date: date,
@@ -34,13 +32,21 @@ function AddReview() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newReview),
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw Error("Failed to add review");
-      }
-    });
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw Error("Failed to add review");
+        }
+      })
+      .then((review) => {
+        console.log(review);
+        alert(
+          `Thank you ${review.data.user.username}! The review has been posted`
+        );
+      })
+      .catch((error) => console.error(error));
 
     return null;
   }
@@ -53,12 +59,7 @@ function AddReview() {
         </h2>
       </div>
       <div className="addReview-form-wrapper">
-        <form
-          // onSubmit={(e) => onSubmit(e)}
-          className="add-review-form"
-          noValidate
-          autoComplete="off"
-        >
+        <form className="add-review-form" noValidate autoComplete="off">
           <TextField
             onChange={(e) => setDate(e.target.value)}
             id="date"
