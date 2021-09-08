@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addMessage = exports.getMessagesByUserId = void 0;
+exports.addMessage = exports.getMessagesByConversationId = exports.getMessagesByUserId = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
 // export type Message = {
 //   date: string;
@@ -34,11 +34,45 @@ const getMessagesByUserId = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.getMessagesByUserId = getMessagesByUserId;
-const addMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newMessage = req.body;
+const getMessagesByConversationId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { conversation_ID } = req.body;
     try {
-        const createdMessage = dbClient_1.default.message.create({
-            data: Object.assign({}, newMessage),
+        const messages = yield dbClient_1.default.message.findMany({
+            where: {
+                conversation_ID: conversation_ID,
+            },
+        });
+        res.json({ data: messages });
+    }
+    catch (error) {
+        res.json({ error });
+    }
+});
+exports.getMessagesByConversationId = getMessagesByConversationId;
+const addMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { date, content, user_ID, counsellor_ID, conversation_ID } = req.body;
+    const dateString = date.toDateString();
+    try {
+        const createdMessage = yield dbClient_1.default.message.create({
+            data: {
+                date: dateString,
+                content: content,
+                user: {
+                    connect: {
+                        id: user_ID,
+                    },
+                },
+                counsellor: {
+                    connect: {
+                        id: counsellor_ID,
+                    },
+                },
+                conversation: {
+                    connect: {
+                        id: conversation_ID,
+                    },
+                },
+            },
         });
         res.json({ data: createdMessage });
     }

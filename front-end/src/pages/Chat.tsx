@@ -15,6 +15,10 @@ function Message() {
 	);
 }
 function Chat() {
+    function handleMeassageSend() {
+        //on click the message should be posted to messages
+        //if the message was posted the state should be updated 
+    }
 	return (
 		<div className="chat-wrapper">
 			<div className="search-container">

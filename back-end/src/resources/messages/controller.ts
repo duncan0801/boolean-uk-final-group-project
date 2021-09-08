@@ -10,29 +10,63 @@ import dbClient from "../../utils/dbClient";
 // };
 
 export const getMessagesByUserId = async (req: Request, res: Response) => {
-  try {
-    const messages = await dbClient.message.findMany({
-      where: {
-        user_ID: req.currentUserId,
-      },
-    });
-    res.json({ data: messages });
-  } catch (error) {
-    res.json({ error });
-  }
+	try {
+		const messages = await dbClient.message.findMany({
+			where: {
+				user_ID: req.currentUserId,
+			},
+		});
+		res.json({ data: messages });
+	} catch (error) {
+		res.json({ error });
+	}
+};
+export const getMessagesByConversationId = async (
+	req: Request,
+	res: Response
+) => {
+	const { conversation_ID } = req.body;
+	try {
+		const messages = await dbClient.message.findMany({
+			where: {
+				conversation_ID: conversation_ID,
+			},
+		});
+		res.json({ data: messages });
+	} catch (error) {
+		res.json({ error });
+	}
 };
 
 export const addMessage = async (req: Request, res: Response) => {
-  const newMessage = req.body;
+	const { date, content, user_ID, counsellor_ID, conversation_ID } = req.body;
 
-  try {
-    const createdMessage = dbClient.message.create({
-      data: {
-        ...newMessage,
-      },
-    });
-    res.json({ data: createdMessage });
-  } catch (error) {
-    res.json({ error });
-  }
+	const dateString = date.toDateString();
+
+	try {
+		const createdMessage = await dbClient.message.create({
+			data: {
+				date: dateString,
+				content: content,
+				user: {
+					connect: {
+						id: user_ID,
+					},
+				},
+				counsellor: {
+					connect: {
+						id: counsellor_ID,
+					},
+				},
+				conversation: {
+					connect: {
+						id: conversation_ID,
+					},
+				},
+			},
+		});
+		res.json({ data: createdMessage });
+	} catch (error) {
+		res.json({ error });
+	}
 };
