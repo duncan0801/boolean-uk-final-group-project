@@ -35,7 +35,7 @@ const getMessagesByUserId = (req, res) => __awaiter(void 0, void 0, void 0, func
 });
 exports.getMessagesByUserId = getMessagesByUserId;
 const getMessagesByConversationId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { conversation_ID } = req.body;
+    const conversation_ID = Number(req.params.id);
     try {
         const messages = yield dbClient_1.default.message.findMany({
             where: {
@@ -51,30 +51,45 @@ const getMessagesByConversationId = (req, res) => __awaiter(void 0, void 0, void
 exports.getMessagesByConversationId = getMessagesByConversationId;
 const addMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { date, content, user_ID, counsellor_ID, conversation_ID } = req.body;
-    const dateString = date.toDateString();
     try {
-        const createdMessage = yield dbClient_1.default.message.create({
-            data: {
-                date: dateString,
-                content: content,
-                user: {
-                    connect: {
-                        id: user_ID,
+        if (user_ID) {
+            const createdMessage = yield dbClient_1.default.message.create({
+                data: {
+                    date: date,
+                    content: content,
+                    user: {
+                        connect: {
+                            id: user_ID,
+                        },
+                    },
+                    conversation: {
+                        connect: {
+                            id: conversation_ID,
+                        },
                     },
                 },
-                counsellor: {
-                    connect: {
-                        id: counsellor_ID,
+            });
+            res.json({ data: createdMessage });
+        }
+        if (counsellor_ID) {
+            const createdMessage = yield dbClient_1.default.message.create({
+                data: {
+                    date: date,
+                    content: content,
+                    counsellor: {
+                        connect: {
+                            id: counsellor_ID,
+                        },
+                    },
+                    conversation: {
+                        connect: {
+                            id: conversation_ID,
+                        },
                     },
                 },
-                conversation: {
-                    connect: {
-                        id: conversation_ID,
-                    },
-                },
-            },
-        });
-        res.json({ data: createdMessage });
+            });
+            res.json({ data: createdMessage });
+        }
     }
     catch (error) {
         res.json({ error });

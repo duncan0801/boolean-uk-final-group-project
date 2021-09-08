@@ -41,7 +41,7 @@ function User() {
         <Link to="/add-review" className="post-review">
           Add a review
         </Link>
-        <Link to="/reviews" className="message-counsellor">
+        <Link to={`/chat/user/${user.id}`} className="message-counsellor">
           Message counsellor
         </Link>
       </div>

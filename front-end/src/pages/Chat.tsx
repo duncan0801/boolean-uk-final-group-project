@@ -1,5 +1,10 @@
-import React from "react";
+import React, { FormEventHandler, SyntheticEvent, useEffect } from "react";
+import useStore from "../store";
 import "../styles/chat.css";
+// Need:
+//  1. the content from the message
+//  2. the user/ counsellor profile photo 
+//  3. identify if its a user message or a counsellor message
 
 function Message() {
 	return (
@@ -15,10 +20,40 @@ function Message() {
 	);
 }
 function Chat() {
-    function handleMeassageSend() {
-        //on click the message should be posted to messages
-        //if the message was posted the state should be updated 
-    }
+	const messages = useStore((state) => state.messages);
+	const setMessages = useStore((state) => state.setMessages);
+	const messageField = useStore((state) => state.messageField);
+	const setMessageField = useStore((state) => state.setMessageField);
+	const fetchMessagesByConversationId = useStore(
+		(state) => state.fetchMessagesByConversationId
+	);
+	const postMessage = useStore((state) => state.postMessage);
+	const user = useStore((state) => state.user);
+	const userMessages = user?.messages;
+	function handleMessageOnChange(event: React.SyntheticEvent) {
+		
+	}
+
+	function handleMessageSend(event: React.SyntheticEvent<HTMLFormElement>) {
+		event.preventDefault();
+		if (user && user.counsellor_ID && user.conversation) {
+			const today = new Date();
+			const dd = String(today.getDate());
+			const mm = String(today.getMonth() + 1);
+			const yyyy = String(today.getFullYear());
+
+			const date = dd + "/" + mm + "/" + yyyy;
+
+			const content = messageField;
+			const user_ID = user.id;
+			const counsellor_ID = user.counsellor_ID;
+			const conversation_ID = user.conversation.id;
+
+			postMessage(date, content, user_ID, counsellor_ID, conversation_ID);
+			//on click the message should be posted to messages
+			//if the message was posted ok, the state should be updated
+		}
+	}
 	return (
 		<div className="chat-wrapper">
 			<div className="search-container">
@@ -28,11 +63,19 @@ function Chat() {
 			<div className="chat-title">
 				<span>Dr. Whatts</span>
 			</div>
-			<div className="chat-message-list"></div>
+			<div className="chat-message-list">
+                <Message/>
+                <Message/>
+            </div>
 			<div className="chat-form">
-				<form>
+				<form onSubmit={handleMessageSend}>
 					<div className="container">
-						<textarea name="composeMessage"></textarea>
+						<textarea
+							onChange={e => setMessageField(e.target.value)}
+							name="composeMessage"
+							id="composeMessage"
+                            value={messageField}
+						></textarea>
 						<button type="submit">
 							{/* <!-- This is the send button --> */}
 							<svg
@@ -51,39 +94,6 @@ function Chat() {
 				</form>
 			</div>
 		</div>
-	);
-}
-
-function Chat1() {
-	return (
-		<>
-			<section className="messages">
-				<ul>
-					<Message />
-					<Message />
-					<Message />
-				</ul>
-			</section>
-			<section className="compose">
-				<form>
-					<textarea name="composeMessage"></textarea>
-					<button type="submit">
-						{/* <!-- This is the send button --> */}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							width="24"
-							height="24"
-						>
-							<path
-								fill="currentColor"
-								d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"
-							></path>
-						</svg>
-					</button>
-				</form>
-			</section>
-		</>
 	);
 }
 

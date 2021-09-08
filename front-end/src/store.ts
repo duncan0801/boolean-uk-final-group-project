@@ -1,6 +1,7 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { useEffect } from "react";
+import set from "date-fns/set";
 
 export type Faq = {
 	id: number;
@@ -18,6 +19,12 @@ export type User = {
 	appointments?: Appointment[];
 	messages?: Message[];
 	reviews?: Review[];
+	conversation?: Conversation;
+};
+export type Conversation = {
+	id: number;
+	counsellor_ID: number;
+	user_ID: number;
 };
 export type Service = {
 	id: number;
@@ -113,6 +120,8 @@ type Store = {
 	setMessages: (messages: Message[]) => void;
 	appointments: Appointment[] | null;
 	setAppointments: (appointments: Appointment[]) => void;
+    messageField: string,
+    setMessageField: (message: string) => void
 
 	fetchFaqs: () => void;
 	fetchServices: () => void;
@@ -122,19 +131,19 @@ type Store = {
 	fetchLanguages: () => void;
 	fetchReviews: () => void;
 	postMessage: (
-		date: Date,
+		date: string,
 		content: string,
 		user_ID: number,
 		counsellor_ID: number,
 		conversation_ID: number
 	) => void;
+	fetchMessagesByConversationId: (conversation_ID: number) => void;
 };
 
 const useStore = create<Store>(
 	devtools((set) => ({
 		faqs: null,
 		setFaqs: (faqs) => set({ faqs: faqs }),
-
 		services: null,
 		setServices: (services) => set({ services: services }),
 		counsellors: null,
@@ -149,6 +158,8 @@ const useStore = create<Store>(
 		setReviews: (reviews) => set({ reviews: reviews }),
 		messages: null,
 		setMessages: (messages) => set({ messages: messages }),
+        messageField: "",
+        setMessageField: (message) => set({messageField: message}),
 		appointments: null,
 		setAppointments: (appointments) => set({ appointments: appointments }),
 		loggedinUser: null,
@@ -191,9 +202,11 @@ const useStore = create<Store>(
 				.then((res) => res.json())
 				.then((entity) => set({ reviews: entity.data }));
 		},
-        // fetchMessagesByConversationId() {
-        //     fetch()
-        // }
+		fetchMessagesByConversationId(conversation_ID) {
+			fetch(
+				`http://localhost:4000/messages/conversation/${conversation_ID}`
+			);
+		},
 		postMessage(date, content, user_ID, counsellor_ID, conversation_ID) {
 			fetch(`http://localhost:4000/messages`, {
 				credentials: "include",
