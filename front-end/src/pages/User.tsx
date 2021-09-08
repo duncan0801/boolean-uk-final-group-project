@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import useStore, { loggedinUser } from "../store";
+import useStore, { LoggedinUser } from "../store";
 import "../styles/user.css";
 
 function User() {
@@ -10,7 +10,7 @@ function User() {
 
   useEffect(() => {
     if (loggedinUser) {
-      fetchUser(loggedinUser as loggedinUser);
+      fetchUser(loggedinUser as LoggedinUser);
     }
   }, []);
 

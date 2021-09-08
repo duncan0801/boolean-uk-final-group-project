@@ -1,12 +1,12 @@
 import React, { FormEventHandler, SyntheticEvent, useEffect } from "react";
-import useStore from "../store";
+import useStore, { Counsellor, Message } from "../store";
 import "../styles/chat.css";
 // Need:
 //  1. the content from the message
-//  2. the user/ counsellor profile photo 
+//  2. the user/ counsellor profile photo
 //  3. identify if its a user message or a counsellor message
 
-function Message() {
+function MessageComponent({ message }: { message: Message }) {
 	return (
 		// <li className={user_ID === activeUser ? "outgoing message" : "message"}>
 		<li className="message">
@@ -22,6 +22,7 @@ function Message() {
 function Chat() {
 	const messages = useStore((state) => state.messages);
 	const setMessages = useStore((state) => state.setMessages);
+	const counsellor = useStore((state) => state.counsellor);
 	const messageField = useStore((state) => state.messageField);
 	const setMessageField = useStore((state) => state.setMessageField);
 	const fetchMessagesByConversationId = useStore(
@@ -30,9 +31,11 @@ function Chat() {
 	const postMessage = useStore((state) => state.postMessage);
 	const user = useStore((state) => state.user);
 	const userMessages = user?.messages;
-	function handleMessageOnChange(event: React.SyntheticEvent) {
-		
-	}
+	const fetchCounsellorById = useStore((state) => state.fetchCounsellorById);
+
+	useEffect(() => {
+		fetchCounsellorById(String(user?.counsellor_ID));
+	}, []);
 
 	function handleMessageSend(event: React.SyntheticEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -54,6 +57,7 @@ function Chat() {
 			//if the message was posted ok, the state should be updated
 		}
 	}
+
 	return (
 		<div className="chat-wrapper">
 			<div className="search-container">
@@ -61,20 +65,23 @@ function Chat() {
 			</div>
 			{/* <div className="new-message-container"></div> */}
 			<div className="chat-title">
-				<span>Dr. Whatts</span>
+				<span>
+					{counsellor?.firstName + " " + counsellor?.lastName}
+				</span>
 			</div>
 			<div className="chat-message-list">
-                <Message/>
-                <Message/>
-            </div>
+				{userMessages?.map((messageToShow) => {
+					return <MessageComponent message={messageToShow} />;
+				})}
+			</div>
 			<div className="chat-form">
 				<form onSubmit={handleMessageSend}>
 					<div className="container">
 						<textarea
-							onChange={e => setMessageField(e.target.value)}
+							onChange={(e) => setMessageField(e.target.value)}
 							name="composeMessage"
 							id="composeMessage"
-                            value={messageField}
+							value={messageField}
 						></textarea>
 						<button type="submit">
 							{/* <!-- This is the send button --> */}

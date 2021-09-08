@@ -93,7 +93,7 @@ export type Appointment = {
 	counsellor?: Counsellor;
 };
 
-export type loggedinUser = {
+export type LoggedinUser = {
 	id: number;
 	username: string;
 };
@@ -110,7 +110,7 @@ type Store = {
 	setCounsellor: (counsellor: Counsellor) => void;
 	user: User | null;
 	setUser: (user: User) => void;
-	loggedinUser: loggedinUser | null;
+	loggedinUser: LoggedinUser | null;
 	setLoggedinUser: (loggedinUser: User | null) => void;
 	languages: Language[] | null;
 	setLanguages: (languages: Language[]) => void;
@@ -120,14 +120,16 @@ type Store = {
 	setMessages: (messages: Message[]) => void;
 	appointments: Appointment[] | null;
 	setAppointments: (appointments: Appointment[]) => void;
-    messageField: string,
-    setMessageField: (message: string) => void
+	messageField: string;
+	setMessageField: (message: string) => void;
+	counsellorForConversation: Counsellor | null;
+	setCounsellorForConversation: (counsellor: Counsellor | null) => void;
 
 	fetchFaqs: () => void;
 	fetchServices: () => void;
 	fetchCounsellors: () => void;
 	fetchCounsellorById: (id: string) => void;
-	fetchUser: (loggedinUser: loggedinUser) => void;
+	fetchUser: (loggedinUser: LoggedinUser) => void;
 	fetchLanguages: () => void;
 	fetchReviews: () => void;
 	postMessage: (
@@ -158,12 +160,15 @@ const useStore = create<Store>(
 		setReviews: (reviews) => set({ reviews: reviews }),
 		messages: null,
 		setMessages: (messages) => set({ messages: messages }),
-        messageField: "",
-        setMessageField: (message) => set({messageField: message}),
+		messageField: "",
+		setMessageField: (message) => set({ messageField: message }),
 		appointments: null,
 		setAppointments: (appointments) => set({ appointments: appointments }),
 		loggedinUser: null,
 		setLoggedinUser: (loggedinUser) => set({ loggedinUser: loggedinUser }),
+		counsellorForConversation: null,
+		setCounsellorForConversation: (counsellor) =>
+			set({ counsellorForConversation: counsellor }),
 
 		fetchFaqs: () => {
 			fetch("http://localhost:4000/faq")
