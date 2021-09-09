@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function Appointments() {
+
   const classes = useStyles();
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
