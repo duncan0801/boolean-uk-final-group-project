@@ -20,6 +20,7 @@ import FAQ from "./pages/FAQ";
 import useStore from "./store";
 import AddReview from "./pages/AddReview";
 import AppointmentSuccess from "./pages/AppointmentSuccess";
+import FooterComponent from "./components/FooterComponent";
 
 function App() {
   const loggedinUser = useStore((state) => state.loggedinUser);
@@ -74,6 +75,7 @@ function App() {
           </Route>
         </Switch>
       </main>
+      <FooterComponent/>
     </div>
   );
 }
