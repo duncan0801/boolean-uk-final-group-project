@@ -2,7 +2,8 @@ import { keys } from "@material-ui/core/styles/createBreakpoints";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useStore, { Appointment, loggedinUser } from "../store";
-import "../styles/user.css";
+
+
 
 function User() {
   const loggedinUser = useStore((state) => state.loggedinUser);
@@ -12,7 +13,7 @@ function User() {
 
   useEffect(() => {
     if (loggedinUser) {
-      fetchUser(loggedinUser as loggedinUser);
+      fetchUser(loggedinUser as LoggedinUser);
     }
   }, []);
 
@@ -82,7 +83,7 @@ function User() {
         <Link to="/add-review" className="post-review">
           Add a review
         </Link>
-        <Link to="/reviews" className="message-counsellor">
+        <Link to={`/chat/user/${user.id}`} className="message-counsellor">
           Message counsellor
         </Link>
       </div>

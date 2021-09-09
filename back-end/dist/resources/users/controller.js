@@ -36,7 +36,7 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 appointments: true,
                 messages: true,
                 reviews: true,
-                Conversation: true,
+                conversation: true,
             },
         });
         res.json({ data: user });
