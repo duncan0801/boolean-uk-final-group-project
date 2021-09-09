@@ -1,14 +1,7 @@
+import { Appointment } from ".prisma/client";
 import { Request, Response } from "express";
 import dbClient from "../../utils/dbClient";
-//model Appointment {
-//   id Int @id @default(autoincrement())
-//   date DateTime @db.Date
-//   time DateTime @db.Time()
-//   user_ID Int
-//   counsellor_ID Int
-//   user User @relation(fields: [user_ID], references: [id], onDelete: Cascade)
-//   counsellor Counsellor @relation(fields: [counsellor_ID], references: [id], onDelete: Cascade)
-// }
+import { User } from "@prisma/client";
 
 export const getUsersAppointments = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
@@ -51,15 +44,45 @@ export const updateAppointment = async (req: Request, res: Response) => {
 };
 
 export const addAppointment = async (req: Request, res: Response) => {
-  const newAppointment = req.body;
+  const newAppointment: Appointment = req.body;
+  console.log(newAppointment);
 
   try {
-    const created = await dbClient.appointment.create({
-      data: {
-        ...newAppointment,
+    const ifExcit = await dbClient.appointment.findUnique({
+      where: {
+        date_time: {
+          time: newAppointment.time,
+          date: newAppointment.date,
+        },
       },
     });
-    res.json({ data: created });
+
+    if (!ifExcit) {
+      const created = await dbClient.appointment.create({
+        data: {
+          ...newAppointment,
+        },
+      });
+      res.json({ data: created });
+    } else {
+      res.json({ msg: "PLease choose different time.." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({ error });
+  }
+};
+
+export const deleteAppointment = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  try {
+    const deleted = await dbClient.appointment.delete({
+      where: {
+        // user_ID: req.currentUserId,
+        id,
+      },
+    });
+    res.json({ data: deleted });
   } catch (error) {
     res.json({ error });
   }

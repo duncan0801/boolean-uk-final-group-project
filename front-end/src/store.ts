@@ -1,100 +1,106 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { useEffect } from "react";
+import set from "date-fns/set";
 
 export type Faq = {
-  id: number;
-  question: string;
-  answer: string;
+	id: number;
+	question: string;
+	answer: string;
 };
 export type User = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  avatar: string;
-  username: string;
-  password: string;
-  counsellor_ID?: number;
-  appointments?: Appointment[];
-  messages?: Message[];
-  reviews?: Review[];
+	id: number;
+	firstName: string;
+	lastName: string;
+	avatar: string;
+	username: string;
+	password: string;
+	counsellor_ID?: number;
+	appointments?: Appointment[];
+	messages?: Message[];
+	reviews?: Review[];
+	conversation?: Conversation;
+};
+export type Conversation = {
+	id: number;
+	counsellor_ID: number;
+	user_ID: number;
 };
 export type Service = {
-  id: number;
-  name: string;
+	id: number;
+	name: string;
 };
 export type Language = {
-  id: number;
-  language: string;
-  counsellors: Counsellor[];
+	id: number;
+	language: string;
+	counsellors: Counsellor[];
 };
 export type CounsellorOnLanguage = {
-  id: number;
-  language_ID: number;
-  counsellor_ID: number;
-  counsellor?: Counsellor;
-  language?: Language;
+	id: number;
+	language_ID: number;
+	counsellor_ID: number;
+	counsellor?: Counsellor;
+	language?: Language;
 };
 export type CounsellorOnService = {
-  id: number;
-  counsellor_ID: number;
-  service_ID: number;
-  counsellor: Counsellor;
-  service: Service;
+	id: number;
+	counsellor_ID: number;
+	service_ID: number;
+	counsellor: Counsellor;
+	service: Service;
 };
 export type Counsellor = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  about: string;
-  licensing: string;
-  avatar: string;
-  hourlyRate: number;
-  yearsExperience: number;
-  gender: string;
-  appointments: Appointment[];
-  messages: Message[];
-  reviews: Review[];
-  specialties: Service[];
-  languages: Language[];
+	id: number;
+	firstName: string;
+	lastName: string;
+	about: string;
+	licensing: string;
+	avatar: string;
+	hourlyRate: number;
+	yearsExperience: number;
+	gender: string;
+	appointments: Appointment[];
+	messages: Message[];
+	reviews: Review[];
+	specialties: Service[];
+	languages: Language[];
 };
 export type Review = {
-  id: number;
-  date: string;
-  content: string;
-  user_ID: number;
-  counsellor_ID: number;
-  user?: User;
-  counsellor?: Counsellor;
+	id: number;
+	date: string;
+	content: string;
+	user_ID: number;
+	counsellor_ID: number;
+	user?: User;
+	counsellor?: Counsellor;
 };
 export type Message = {
-  id: number;
-  date: string;
-  content: string;
-  user_ID: number;
-  counsellor_ID: number;
-  user?: User;
-  counsellor?: Counsellor;
+	id: number;
+	date: string;
+	content: string;
+	user_ID: number;
+	counsellor_ID: number;
+	user?: User;
+	counsellor?: Counsellor;
 };
 export type Appointment = {
+
   id: number;
   date: string;
-  content: string;
+  time: string;
   user_ID: number;
   counsellor_ID: number;
-  user?: User;
-  counsellor?: Counsellor;
+
 };
 
-export type loggedinUser = {
-  id: number;
-  username: string;
+export type LoggedinUser = {
+	id: number;
+	username: string;
 };
 
 type Store = {
-  faqs: Faq[] | null;
-  setFaqs: (faqs: Faq[]) => void;
-
+	faqs: Faq[] | null;
+	setFaqs: (faqs: Faq[]) => void;
   services: Service[] | null;
   setServices: (services: Service[]) => void;
   counsellors: Counsellor[] | null;
@@ -200,6 +206,7 @@ const useStore = create<Store>(
       return null;
     },
   }))
+
 );
 
 export default useStore;
