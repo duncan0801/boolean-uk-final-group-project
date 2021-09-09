@@ -79,11 +79,9 @@ export type Message = {
 export type Appointment = {
   id: number;
   date: string;
-  content: string;
+  time: string;
   user_ID: number;
   counsellor_ID: number;
-  user?: User;
-  counsellor?: Counsellor;
 };
 
 export type loggedinUser = {

@@ -72,7 +72,7 @@ model Message {
     id              Int          @id @default(autoincrement())
     date            String
     content         String
-    user_ID         Int?
+    user_ID         Int? 
     counsellor_ID   Int?
     conversation_ID Int
     user            User?        @relation(fields: [user_ID], references: [id])
@@ -91,10 +91,11 @@ model Conversation {
 
 model Appointment {
     id            Int        @id @default(autoincrement())
-    date          String
-    time          String
-    user_ID       Int
+    date          String 
+    time          String 
+    user_ID       Int 
     counsellor_ID Int
+    @@unique([date, time])
     user          User       @relation(fields: [user_ID], references: [id], onDelete: Cascade)
     counsellor    Counsellor @relation(fields: [counsellor_ID], references: [id], onDelete: Cascade)
 }
