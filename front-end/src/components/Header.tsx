@@ -5,13 +5,8 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, Route } from "react-router-dom";
 import useStore, { User } from "../store";
-
-// type Props = {
-//   loggedUser: User | null;
-//   setLoggedinUser: (data: null) => void;
-// };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,7 +30,6 @@ function Header() {
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify(),
     })
       .then((response) => {
         if (response.ok) {
@@ -49,6 +43,10 @@ function Header() {
         setLoggedinUser(null);
       })
       .catch((error) => console.error(error));
+
+    <Route path="/" exact>
+      <Redirect to="/home" />
+    </Route>;
   }
 
   return (
@@ -101,17 +99,17 @@ function Header() {
             </Link>
           </>
         ) : (
-          <Link to="/login" className="header-links log-in">
+          <Link to="/login" className="header-links-log-in">
             log in
           </Link>
         )}
         {loggedinUser ? (
-          <Link to="/logout">
+          <Link to="/">
             <button
               onClick={(_e) => {
                 logOut();
               }}
-              className="header-links log-out"
+              className="header-links-log-out"
             >
               Log out
             </button>

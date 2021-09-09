@@ -12,17 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addAppointment = exports.updateAppointment = exports.getUsersAppointments = void 0;
+exports.deleteAppointment = exports.addAppointment = exports.updateAppointment = exports.getUsersAppointments = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
-//model Appointment {
-//   id Int @id @default(autoincrement())
-//   date DateTime @db.Date
-//   time DateTime @db.Time()
-//   user_ID Int
-//   counsellor_ID Int
-//   user User @relation(fields: [user_ID], references: [id], onDelete: Cascade)
-//   counsellor Counsellor @relation(fields: [counsellor_ID], references: [id], onDelete: Cascade)
-// }
 const getUsersAppointments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     try {
@@ -62,14 +53,45 @@ const updateAppointment = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.updateAppointment = updateAppointment;
 const addAppointment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newAppointment = req.body;
+    console.log(newAppointment);
     try {
-        const created = yield dbClient_1.default.appointment.create({
-            data: Object.assign({}, newAppointment),
+        const ifExcit = yield dbClient_1.default.appointment.findUnique({
+            where: {
+                date_time: {
+                    time: newAppointment.time,
+                    date: newAppointment.date,
+                },
+            },
         });
-        res.json({ data: created });
+        if (!ifExcit) {
+            const created = yield dbClient_1.default.appointment.create({
+                data: Object.assign({}, newAppointment),
+            });
+            res.json({ data: created });
+        }
+        else {
+            res.json({ msg: "PLease choose different time.." });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.json({ error });
+    }
+});
+exports.addAppointment = addAppointment;
+const deleteAppointment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = Number(req.params.id);
+    try {
+        const deleted = yield dbClient_1.default.appointment.delete({
+            where: {
+                // user_ID: req.currentUserId,
+                id,
+            },
+        });
+        res.json({ data: deleted });
     }
     catch (error) {
         res.json({ error });
     }
 });
-exports.addAppointment = addAppointment;
+exports.deleteAppointment = deleteAppointment;

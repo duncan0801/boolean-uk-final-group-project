@@ -1,40 +1,111 @@
-import React from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import LuxonUtils from "@date-io/luxon";
-import { DatePicker } from "@material-ui/pickers";
+import React, { useState } from "react";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import { Link } from "react-router-dom";
+import useStore from "../store";
 import "../styles/appointments.css";
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
+  })
+);
+
 function Appointments() {
-	const [selectedDate, handleDateChange] = useState(new Date());
+  const classes = useStyles();
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const loggedinUser = useStore((state) => state.loggedinUser);
+  const user = useStore((state) => state.user);
 
-	const { id }: { id: string } = useParams();
+  if (!loggedinUser) {
+    return <>Please loggin or create account</>;
+  }
 
-	return (
-		<main className="appointments">
-			<h2>Make an appointment</h2>
-			<form className="select-appointment">
-				<div className="date-picker">
-					<MuiPickersUtilsProvider utils={LuxonUtils}>
-						<DatePicker
-							value={selectedDate}
-							onChange={handleDateChange}
-							animateYearScrolling
-						/>
-					</MuiPickersUtilsProvider>
-				</div>
-				<div className="available-appointments">
-					<button className="appointment-time">9:00</button>
-					<button className="appointment-time">11:00</button>
-					<button className="appointment-time">15:00</button>
-					<button className="appointment-time">16:00</button>
-					<button className="appointment-time">17:00</button>
-					<button className="appointment-time">18:00</button>
-				</div>
-			</form>
-		</main>
-	);
+  function bookAppointment(e: any) {
+    e.preventDefault();
+
+    const signUpDetails = {
+      date: date,
+      time: time,
+      user_ID: loggedinUser?.id,
+      counsellor_ID: user?.counsellor_ID,
+    };
+
+    fetch("http://localhost:4000/appointments", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signUpDetails),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw Error("Failed to add new appointment");
+        }
+      })
+      .then((newAppointment) => {
+        alert(
+          `Thank you ${user?.username}, appointment was succesfully booked. `
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
+  return (
+    <section className="appointments">
+      <div className="top-login-page">
+        <h1 className="Book-appointment-page-header">Make an appointment</h1>
+        <h2 className="book-appointment-page-h2">
+          PLease sselect preferable date and time beetwen 9:00 - 18:00
+        </h2>
+      </div>
+      <form className={classes.container} noValidate>
+        <TextField
+          id="date"
+          label="Date"
+          type="date"
+          onChange={(e) => setDate(e.target.value)}
+          defaultValue="2021-09-10"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+
+        <TextField
+          onChange={(e) => setTime(e.target.value)}
+          id="time"
+          label="Time"
+          type="time"
+          defaultValue="10:30"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+      </form>
+      <Link to={`/user/${loggedinUser.id}`} className="book-link">
+        <button
+          onClick={(e) => bookAppointment(e)}
+          className="book--appointment-button"
+        >
+          Book
+        </button>
+      </Link>
+    </section>
+  );
 }
 
 export default Appointments;

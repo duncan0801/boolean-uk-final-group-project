@@ -84,13 +84,13 @@ export type Message = {
 	counsellor?: Counsellor;
 };
 export type Appointment = {
-	id: number;
-	date: string;
-	content: string;
-	user_ID: number;
-	counsellor_ID: number;
-	user?: User;
-	counsellor?: Counsellor;
+
+  id: number;
+  date: string;
+  time: string;
+  user_ID: number;
+  counsellor_ID: number;
+
 };
 
 export type LoggedinUser = {
