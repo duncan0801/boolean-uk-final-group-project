@@ -1,9 +1,8 @@
 import { keys } from "@material-ui/core/styles/createBreakpoints";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import useStore, { Appointment, loggedinUser } from "../store";
-
-
+import useStore, { Appointment, LoggedinUser } from "../store";
+import "../styles/user.css";
 
 function User() {
   const loggedinUser = useStore((state) => state.loggedinUser);
