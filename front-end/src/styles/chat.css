@@ -116,29 +116,23 @@ html {
 }
 
 li.message {
-	border: 1px solid black;
 	border-radius: 5px;
 	padding: 10px;
-	background: teal;
+	background: rgba(0, 128, 128, 0.678);
 	margin: 10px 0;
 	display: grid;
 	grid-template-areas: "message-content profile-pic";
 	grid-template-columns: 1fr auto;
 }
 .counsellor-message {
-	border: 1px solid black;
 	border-radius: 5px;
 	padding: 10px;
-	background: teal;
+	background: rgba(140, 255, 255, 0.404);
 	margin: 10px 0;
 	display: grid;
 	gap: 20px;
 	grid-template-areas: "profile-pic message-content ";
 	grid-template-columns: auto 1fr;
-}
-
-.outgoing {
-	background-color: teal;
 }
 .compose form {
 	width: 100%;

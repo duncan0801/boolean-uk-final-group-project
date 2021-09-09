@@ -121,6 +121,8 @@ type Store = {
   setServiceName: (serviceName: string[]) => void;
   messageField: string;
   setMessageField: (message: string) => void;
+  userMessages: Message[] | null,
+  setUserMessages: (messages: Message[]) => void
   postMessage: (
     date: string,
     content: string,
@@ -166,6 +168,8 @@ const useStore = create<Store>(
     setServiceName: (serviceName) => set({ serviceName: serviceName }),
     messageField: "",
     setMessageField: (message) => set({ messageField: message }),
+    userMessages: null,
+    setUserMessages: (messages) => set({userMessages: messages}),
 
     fetchFaqs: () => {
       fetch("http://localhost:4000/faq")
