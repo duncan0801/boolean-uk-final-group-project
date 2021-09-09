@@ -14,12 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteMessage = exports.addMessage = exports.getMessagesByConversationId = exports.getMessagesByUserId = void 0;
 const dbClient_1 = __importDefault(require("../../utils/dbClient"));
-// export type Message = {
-//   date: string;
-//   content: string;
-//   user_ID: number;
-//   counsellor_ID: number;
-// };
 const getMessagesByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const messages = yield dbClient_1.default.message.findMany({
@@ -52,7 +46,6 @@ exports.getMessagesByConversationId = getMessagesByConversationId;
 const addMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { date, content, user_ID, counsellor_ID, conversation_ID } = req.body;
     try {
-        // if (user_ID) {
         const createdMessage = yield dbClient_1.default.message.create({
             data: {
                 date: date,
@@ -70,26 +63,6 @@ const addMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             },
         });
         res.json({ data: createdMessage });
-        // }
-        // if (counsellor_ID) {
-        // 	const createdMessage = await dbClient.message.create({
-        // 		data: {
-        // 			date: date,
-        // 			content: content,
-        // 			counsellor: {
-        // 				connect: {
-        // 					id: counsellor_ID,
-        // 				},
-        // 			},
-        // 			conversation: {
-        // 				connect: {
-        // 					id: conversation_ID,
-        // 				},
-        // 			},
-        // 		},
-        // 	});
-        // 	res.json({ data: createdMessage });
-        // }
     }
     catch (error) {
         res.json({ error });

@@ -60,7 +60,7 @@ function Chat() {
 			// const counsellor_ID = user.counsellor_ID;
 			const conversation_ID = user.conversation.id;
 
-			postMessage(date, content, user_ID, conversation_ID)
+			postMessage(date, content, user_ID, conversation_ID).catch(error => alert("There was an error getting your message through"))
 			//on click the message should be posted to messages
 			//if the message was posted ok, the state should be updated
 		}
@@ -114,6 +114,7 @@ function Chat() {
 								name="composeMessage"
 								id="composeMessage"
 								value={messageField}
+                                placeholder="Write a message..."
 							></textarea>
 							<button type="submit">
 								{/* <!-- This is the send button --> */}

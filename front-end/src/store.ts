@@ -128,7 +128,7 @@ type Store = {
 		content: string,
 		user_ID: number,
 		conversation_ID: number
-	) => void;
+	) => Promise<unknown>;
 	fetchMessagesByConversationId: (conversation_ID: number) => void;
 
 	fetchFaqs: () => void;
@@ -217,7 +217,7 @@ const useStore = create<Store>(
 							serviceName.includes(specialty.name)
 						)
 				);
-				return filteredCounsellors;
+				get().setCounsellors(filteredCounsellors);
 			}
 			return null;
 		},
@@ -232,7 +232,7 @@ const useStore = create<Store>(
 				});
 		},
 		postMessage(date, content, user_ID, conversation_ID) {
-			fetch(`http://localhost:4000/messages`, {
+			return fetch(`http://localhost:4000/messages`, {
 				credentials: "include",
 				method: "POST",
 				headers: {
@@ -247,14 +247,14 @@ const useStore = create<Store>(
 			})
 				.then((res) => res.json())
 				.then((entity) => {
+					const userMessages = get().userMessages;
+					const setUserMessages = get().setUserMessages;
 					if (entity.data) {
-						get().userMessages?.push(entity.data);
+						userMessages
+							? setUserMessages([...userMessages, entity.data])
+							: setUserMessages([entity.data]);
 					}
-					if (entity.error) {
-						alert(
-							"sorry, there was an issue and you message was not sent"
-						);
-					}
+					
 				});
 		},
 	}))
