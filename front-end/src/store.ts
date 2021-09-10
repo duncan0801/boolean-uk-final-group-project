@@ -105,6 +105,8 @@ type Store = {
 	counsellors: Counsellor[] | null;
 	setCounsellors: (counsellors: Counsellor[]) => void;
 	counsellor: Counsellor | null;
+	filteredCounsellors: [] | Counsellor[];
+	setFilteredCounsellors: (counsellors: Counsellor[]) => void;
 	setCounsellor: (counsellor: Counsellor) => void;
 	user: User | null;
 	setUser: (user: User) => void;
@@ -139,7 +141,7 @@ type Store = {
 	fetchUser: (loggedinUser: LoggedinUser) => void;
 	fetchLanguages: () => void;
 	fetchReviews: () => void;
-	filterCounsellorsByService: () => Counsellor[] | null;
+	filterCounsellorsByService: () => Counsellor[] | null | void;
 	onDelete: (appointment: Appointment) => Promise<Appointment[] | void>;
 };
 
@@ -153,6 +155,9 @@ const useStore = create<Store>(
 		setCounsellors: (counsellors) => set({ counsellors: counsellors }),
 		counsellor: null,
 		setCounsellor: (counsellor) => set({ counsellor: counsellor }),
+		filteredCounsellors: [],
+		setFilteredCounsellors: (counsellors) =>
+			set({ filteredCounsellors: counsellors }),
 		user: null,
 		setUser: (user) => set({ user: user }),
 		languages: null,
@@ -211,6 +216,7 @@ const useStore = create<Store>(
 		},
 		filterCounsellorsByService: () => {
 			const counsellors = get().counsellors;
+			const setFilteredCounsellors = get().setFilteredCounsellors;
 			const serviceName = get().serviceName;
 			console.log("serviceName", serviceName);
 
@@ -228,7 +234,7 @@ const useStore = create<Store>(
 				console.log("filtered", filteredCounsellors);
 				console.log("hello");
 
-				return filteredCounsellors;
+				setFilteredCounsellors(filteredCounsellors);
 			} else {
 				console.log("not working");
 				return counsellors;
@@ -237,9 +243,10 @@ const useStore = create<Store>(
 
 		fetchMessagesByConversationId(conversation_ID) {
 			fetch(
-				`http://localhost:4000/messages/conversation/${conversation_ID}`, {
-                    credentials: "include"
-                }
+				`http://localhost:4000/messages/conversation/${conversation_ID}`,
+				{
+					credentials: "include",
+				}
 			)
 				.then((res) => res.json())
 				.then((entity) => {
