@@ -26,15 +26,9 @@ function User() {
     (counsellor) => counsellor.id === user.counsellor_ID
   );
 
-  // function onDelete(appointment: Appointment) {
-  //   fetch(`http://localhost:4000/appointments/${appointment.id}`, {
-  //     credentials: "include",
-  //     method: "DELETE",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  // }
+  function appointmentCounsellor(appointment: Appointment) {
+    return counsellors?.find((c) => c.id === appointment.counsellor_ID);
+  }
 
   return (
     <section className="user-section">
@@ -56,9 +50,10 @@ function User() {
               <ul className="appointmentsList">
                 <li>{appointment.date}</li>
                 <li>{appointment.time}</li>
-                <Link to={`/counsellors/${foundCounsellor?.id}`}>
+                <Link to={`/counsellors/${appointment.counsellor_ID}`}>
                   <li>
-                    {foundCounsellor?.firstName} {foundCounsellor?.lastName}
+                    {appointmentCounsellor(appointment)?.firstName}
+                    {appointmentCounsellor(appointment)?.lastName}
                   </li>
                 </Link>
                 <button
