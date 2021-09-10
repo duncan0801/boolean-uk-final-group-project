@@ -9,6 +9,8 @@ function User() {
   const user = useStore((state) => state.user);
   let counsellors = useStore((state) => state.counsellors);
   const fetchUser = useStore((state) => state.fetchUser);
+  const onDelete = useStore((state) => state.onDelete);
+  const setAppointments = useStore((state) => state.setAppointments);
 
   useEffect(() => {
     if (loggedinUser) {
@@ -24,15 +26,15 @@ function User() {
     (counsellor) => counsellor.id === user.counsellor_ID
   );
 
-  function onDelete(appointment: Appointment) {
-    fetch(`http://localhost:4000/appointments/${appointment.id}`, {
-      credentials: "include",
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  }
+  // function onDelete(appointment: Appointment) {
+  //   fetch(`http://localhost:4000/appointments/${appointment.id}`, {
+  //     credentials: "include",
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  // }
 
   return (
     <section className="user-section">
@@ -60,7 +62,13 @@ function User() {
                   </li>
                 </Link>
                 <button
-                  onClick={(e) => onDelete(appointment)}
+                  onClick={(e) => {
+                    onDelete(appointment).then((updatedAppointments) => {
+                      if (updatedAppointments) {
+                        setAppointments(updatedAppointments);
+                      }
+                    });
+                  }}
                   className="remove-user-page-button"
                 >
                   remove

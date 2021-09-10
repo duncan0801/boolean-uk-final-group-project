@@ -31,6 +31,10 @@ export const getById = async (req: Request, res: Response) => {
       where: {
         id,
       },
+      include: {
+        specialties: true,
+        reviews: true,
+      },
     });
     res.json({ data: foundCounsellor });
   } catch (error) {

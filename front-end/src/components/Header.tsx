@@ -90,7 +90,7 @@ function Header() {
           </Link>
         </ul>
       </nav>
-      <div className="login-logout">
+      <div className="login-out">
         {loggedinUser ? (
           <>
             {`Hello ${loggedinUser.username}`}

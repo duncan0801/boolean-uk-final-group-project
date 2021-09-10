@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -8,6 +9,7 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import useStore from '../store';
 
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
@@ -16,8 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 300,
     },
     chips: {
-      display: 'flex',
-      flexWrap: 'wrap',
+      display: "flex",
+      flexWrap: "wrap",
     },
     chip: {
       margin: 2,
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     noLabel: {
       marginTop: theme.spacing(3),
     },
-  }),
+  })
 );
 
 const ITEM_HEIGHT = 48;
@@ -73,7 +75,21 @@ const services = [
 // }
 
 
+function getStylesForServices(
+  name: string,
+  serviceName: string[],
+  theme: Theme
+) {
+  return {
+    fontWeight:
+      serviceName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
 function ServiceFilter() {
+
     // const [serviceName, setServiceName] = React.useState<string[]>([]);
     const counsellorsByService = useStore((state) => state.filterCounsellorsByService)
     const counsellors = useStore((state) => state.counsellors)
@@ -129,7 +145,37 @@ function ServiceFilter() {
         </Select>
       </FormControl>
 
-    )
+  return (
+    <FormControl className={classes.formControl}>
+      <InputLabel id="demo-mutiple-chip-label">Services</InputLabel>
+      <Select
+        labelId="demo-mutiple-chip-label"
+        id="demo-mutiple-chip"
+        multiple
+        value={serviceName}
+        onChange={handleChange}
+        input={<Input id="select-multiple-chip" />}
+        renderValue={(selected) => (
+          <div className={classes.chips}>
+            {(selected as string[]).map((value) => (
+              <Chip key={value} label={value} className={classes.chip} />
+            ))}
+          </div>
+        )}
+        MenuProps={MenuProps}
+      >
+        {services.map((service) => (
+          <MenuItem
+            key={service}
+            value={service}
+            style={getStylesForServices(service, serviceName, theme)}
+          >
+            {service}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
 }
 
-export default ServiceFilter
+export default ServiceFilter;
