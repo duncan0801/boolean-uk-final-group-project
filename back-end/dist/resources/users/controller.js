@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.createUser = exports.getUser = exports.getAllUsers = void 0;
+exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.getAllUsers = void 0;
 const service_1 = __importDefault(require("./service"));
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
@@ -80,3 +80,18 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.updateUser = updateUser;
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id);
+    try {
+        const deleted = yield service_1.default.delete({
+            where: {
+                id,
+            },
+        });
+        res.json({ data: deleted });
+    }
+    catch (error) {
+        res.json({ error });
+    }
+});
+exports.deleteUser = deleteUser;

@@ -19,7 +19,7 @@ function CounsellorCard({ counsellor }: CounsellorCardProps) {
           <h3 className="counsellor-name">
             {counsellor.firstName + " " + counsellor.lastName}
           </h3>
-          <h4>{counsellor.specialties.map(({ name }) => name).join(", ")}</h4>
+          <h4 className="counsellor-specialties">{counsellor.specialties.map(({ name }) => name).join(", ")}</h4>
         </article>
       </Link>
     </>

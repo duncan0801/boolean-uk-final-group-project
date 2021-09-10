@@ -68,3 +68,18 @@ export const updateUser = async (req: Request, res: Response) => {
     res.json({ error: `ID ${id} doesn't exict` });
   }
 };
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    const deleted = await userClient.delete({
+      where: {
+        id,
+      },
+    });
+    res.json({ data: deleted });
+  } catch (error) {
+    res.json({ error });
+  }
+};

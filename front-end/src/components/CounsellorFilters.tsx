@@ -1,10 +1,10 @@
 import React from 'react';
 import "../styles/counsellor-filters.css"
-import ServiceFilter from "../components/ServiceFilter"
-import LanguageFilter from "../components/LanguageFilter"
-import HourlyRateSlider from '../components/HourlyRateSlider';
-import GenderRadioButtons from '../components/GenderRadioButtons';
-import YearsOfExperienceSlider from '../components/YearsOfExperienceSlider';
+import ServiceFilter from "./ServiceFilter"
+import LanguageFilter from "./LanguageFilter"
+import HourlyRateSlider from './HourlyRateSlider';
+import GenderRadioButtons from './GenderRadioButtons';
+import YearsOfExperienceSlider from './YearsOfExperienceSlider';
 
 function CounsellorFilters() {
 

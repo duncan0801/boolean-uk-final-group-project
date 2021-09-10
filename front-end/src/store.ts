@@ -98,6 +98,7 @@ export type LoggedinUser = {
 };
 
 type Store = {
+
 	faqs: Faq[] | null;
 	setFaqs: (faqs: Faq[]) => void;
 	services: Service[] | null;
@@ -133,6 +134,7 @@ type Store = {
 	fetchMessagesByConversationId: (conversation_ID: number) => void;
 
 
+
   fetchFaqs: () => void;
   fetchServices: () => void;
   fetchCounsellors: () => void;
@@ -145,6 +147,7 @@ type Store = {
 };
 
 const useStore = create<Store>(
+
 	devtools((set, get) => ({
 		faqs: null,
 		setFaqs: (faqs) => set({ faqs: faqs }),
@@ -172,6 +175,7 @@ const useStore = create<Store>(
 		setMessageField: (message) => set({ messageField: message }),
 		userMessages: null,
 		setUserMessages: (messages) => set({ userMessages: messages }),
+
 
     fetchFaqs: () => {
       fetch("http://localhost:4000/faq")
@@ -211,16 +215,28 @@ const useStore = create<Store>(
         .then((entity) => set({ reviews: entity.data }));
     },
     filterCounsellorsByService: () => {
-      const serviceName = get().serviceName;
       const counsellors = get().counsellors;
+      const serviceName = get().serviceName;
+      console.log("serviceName", serviceName);
+
       if (counsellors && serviceName) {
-        const filteredCounsellors = counsellors.filter(({ specialties }) =>
-          specialties.find((specialty) => serviceName.includes(specialty.name))
+        console.log("hey");
+
+        const filteredCounsellors : Counsellor[] = counsellors.filter(({ specialties }) =>
+          specialties.find((specialty) => serviceName.includes(specialty.name as never))
         );
+        console.log("counsellors", counsellors);
+        console.log("services", serviceName);
+        console.log("filtered", filteredCounsellors);
+        console.log("hello");
+
         return filteredCounsellors;
+      } else {
+        console.log("not working");
+        return counsellors;
       }
-      return null;
     },
+
     fetchMessagesByConversationId(conversation_ID) {
       fetch(`http://localhost:4000/messages/conversation/${conversation_ID}`);
     },
