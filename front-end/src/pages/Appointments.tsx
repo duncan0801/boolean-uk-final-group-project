@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useStore from "../store";
 import "../styles/appointments.css";
 
@@ -20,12 +20,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function Appointments() {
-
   const classes = useStyles();
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const loggedinUser = useStore((state) => state.loggedinUser);
   const user = useStore((state) => state.user);
+
+  const { id }: { id: string } = useParams();
+  const counsellorId = Number(id);
 
   if (!loggedinUser) {
     return <>Please loggin or create account</>;
@@ -34,11 +36,11 @@ function Appointments() {
   function bookAppointment(e: any) {
     e.preventDefault();
 
-    const signUpDetails = {
+    const newAppointment = {
       date: date,
       time: time,
       user_ID: loggedinUser?.id,
-      counsellor_ID: user?.counsellor_ID,
+      counsellor_ID: counsellorId,
     };
 
     fetch("http://localhost:4000/appointments", {
@@ -47,21 +49,33 @@ function Appointments() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(signUpDetails),
+      body: JSON.stringify(newAppointment),
     })
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw Error("Failed to add new appointment");
+          throw new Error("Failed to login");
         }
       })
-      .then((newAppointment) => {
+      .then((res) => {
         alert(
           `Thank you ${user?.username}, appointment was succesfully booked. `
         );
       })
-      .catch((error) => console.error(error));
+      .catch((error) => alert("Please choose different time.."));
+
+    // fetch(`http://localhost:4000/user/${user?.id}`, {
+    //   credentials: "include",
+    //   method: "PATCH",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     ...user,
+    //     counsellor_ID: counsellorId,
+    //   }),
+    // }).then((res) => res.json());
   }
 
   return (

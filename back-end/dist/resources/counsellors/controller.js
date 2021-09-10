@@ -36,6 +36,10 @@ const getById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             where: {
                 id,
             },
+            include: {
+                specialties: true,
+                reviews: true,
+            },
         });
         res.json({ data: foundCounsellor });
     }

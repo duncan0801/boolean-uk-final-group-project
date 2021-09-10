@@ -45,7 +45,6 @@ export const updateAppointment = async (req: Request, res: Response) => {
 
 export const addAppointment = async (req: Request, res: Response) => {
   const newAppointment: Appointment = req.body;
-  console.log(newAppointment);
 
   try {
     const ifExcit = await dbClient.appointment.findUnique({
@@ -65,7 +64,7 @@ export const addAppointment = async (req: Request, res: Response) => {
       });
       res.json({ data: created });
     } else {
-      res.json({ msg: "PLease choose different time.." });
+      res.status(403).json({ msg: "PLease choose different time.." });
     }
   } catch (error) {
     console.error(error);
