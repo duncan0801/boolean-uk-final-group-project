@@ -2,12 +2,6 @@ import { User } from "@prisma/client";
 import { Request, Response } from "express";
 import dbClient from "../../utils/dbClient";
 
-// export type Message = {
-//   date: string;
-//   content: string;
-//   user_ID: number;
-//   counsellor_ID: number;
-// };
 
 export const getMessagesByUserId = async (req: Request, res: Response) => {
 	try {
@@ -42,45 +36,33 @@ export const addMessage = async (req: Request, res: Response) => {
 	const { date, content, user_ID, counsellor_ID, conversation_ID } = req.body;
 
 	try {
-		if (user_ID) {
-			const createdMessage = await dbClient.message.create({
-				data: {
-					date: date,
-					content: content,
-					user: {
-						connect: {
-							id: user_ID,
-						},
-					},
-					conversation: {
-						connect: {
-							id: conversation_ID,
-						},
+		const createdMessage = await dbClient.message.create({
+			data: {
+				date: date,
+				content: content,
+				user: {
+					connect: {
+						id: user_ID,
 					},
 				},
-			});
-			res.json({ data: createdMessage });
-		}
-		if (counsellor_ID) {
-			const createdMessage = await dbClient.message.create({
-				data: {
-					date: date,
-					content: content,
-					counsellor: {
-						connect: {
-							id: counsellor_ID,
-						},
-					},
-					conversation: {
-						connect: {
-							id: conversation_ID,
-						},
+				conversation: {
+					connect: {
+						id: conversation_ID,
 					},
 				},
-			});
-			res.json({ data: createdMessage });
-		}
+			},
+		});
+		res.json({ data: createdMessage });
 	} catch (error) {
 		res.json({ error });
 	}
 };
+export async function deleteMessage(req: Request, res: Response) {
+	const id = Number(req.params.id);
+
+	await dbClient.message.delete({
+		where: {
+			id: id,
+		},
+	});
+}

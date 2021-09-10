@@ -11,16 +11,16 @@ body {
 body {
 	display: grid;
 }
-
-html {
-	font-family: Arial, Arial, Helvetica, sans-serif;
+.chat {
+	display: grid;
+	place-items: center;
 }
 
 .chat-wrapper {
 	/* background: linear-gradient(to right, #09b098 0%, #175c62 100%); */
 	display: grid;
 	grid-template:
-		"search-container chat-title" 71px
+		"chat-title chat-title" 71px
 		"chat-message-list chat-message-list" 1fr
 		"chat-form chat-form" 78px
 		/ 1fr 1fr;
@@ -31,6 +31,7 @@ html {
 	min-width: 800px;
 	height: 70vh;
 	border-radius: 10px;
+	place-content: center;
 }
 
 .search-container,
@@ -71,7 +72,7 @@ html {
 }
 .chat-title {
 	grid-area: chat-title;
-	color: silver;
+	color: #243157;
 	font-weight: bold;
 	font-size: 2rem;
 	border-radius: 0 10px 0 0;
@@ -82,8 +83,8 @@ html {
 
 .chat-form {
 	grid-area: chat-form;
-	border-radius: 0 0 10px 0;
-	border-top: 1px solid rgba(0, 0, 0, 0.25);
+	border-radius: 0 0 10px 10px;
+	border-top: 1px solid rgba(144, 144, 144, 0.096);
 }
 .chat-form form {
 	margin: 0 20px;
@@ -96,9 +97,11 @@ html {
 	margin: 5px;
 	height: 100%;
 	width: 90%;
+	padding: 10px;
 }
 .chat-message-list {
 	grid-area: chat-message-list;
+	overflow-y: scroll;
 }
 
 .chat-title,
@@ -110,40 +113,50 @@ html {
 }
 .profile-pic {
 	grid-area: profile-pic;
+	border-radius: 50%;
+	height: 60px;
+	width: 60px;
+	object-fit: cover;
+}
+.name {
+	grid-area: name;
+	font-weight: bold;
 }
 .message-content {
 	grid-area: message-content;
 }
 
 li.message {
-	border: 1px solid black;
 	border-radius: 5px;
-	padding: 10px;
-	background: teal;
-	margin: 10px 0;
+	padding: 20px;
+	background: rgba(0, 128, 128, 0.678);
+	margin: 10px 5px;
 	display: grid;
-	grid-template-areas: "message-content profile-pic";
+	grid-template-areas:
+		"name profile-pic"
+		"message-content profile-pic";
 	grid-template-columns: 1fr auto;
 }
 .counsellor-message {
-	border: 1px solid black;
 	border-radius: 5px;
-	padding: 10px;
-	background: teal;
-	margin: 10px 0;
+	padding: 20px;
+	background: rgba(140, 255, 255, 0.404);
+	margin: 10px 5px;
 	display: grid;
 	gap: 20px;
-	grid-template-areas: "profile-pic message-content ";
+	grid-template-areas:
+		"profile-pic name"
+		"profile-pic message-content ";
 	grid-template-columns: auto 1fr;
-}
-
-.outgoing {
-	background-color: teal;
-}
-.compose form {
-	width: 100%;
+	text-align: right;
 }
 textarea {
 	resize: none;
 	width: 80%;
+	border: none;
+	border-radius: 10px;
+}
+
+.chat-form button {
+	border: none;
 }
