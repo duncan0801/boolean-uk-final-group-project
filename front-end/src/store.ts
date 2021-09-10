@@ -2,6 +2,7 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { useEffect } from "react";
 import set from "date-fns/set";
+import Appointments from "./pages/Appointments";
 
 export type Faq = {
   id: number;
@@ -138,6 +139,7 @@ type Store = {
   fetchLanguages: () => void;
   fetchReviews: () => void;
   filterCounsellorsByService: () => Counsellor[] | null;
+  onDelete: (appointment: Appointment) => Promise<Appointment[] | void>;
 };
 
 const useStore = create<Store>(
@@ -233,6 +235,26 @@ const useStore = create<Store>(
           conversation_ID,
         }),
       }).then((res) => res.json());
+    },
+
+    onDelete(appointment: Appointment) {
+      return fetch(`http://localhost:4000/appointments/${appointment.id}`, {
+        credentials: "include",
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then(() => {
+          const user = get().user;
+          let updatedAppointments = user?.appointments?.filter(
+            (app) => app.id !== appointment.id
+          );
+          if (user) {
+            get().setUser({ ...user, appointments: updatedAppointments });
+          }
+        });
     },
   }))
 );
