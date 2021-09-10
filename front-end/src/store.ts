@@ -237,8 +237,15 @@ const useStore = create<Store>(
 
 		fetchMessagesByConversationId(conversation_ID) {
 			fetch(
-				`http://localhost:4000/messages/conversation/${conversation_ID}`
-			);
+				`http://localhost:4000/messages/conversation/${conversation_ID}`, {
+                    credentials: "include"
+                }
+			)
+				.then((res) => res.json())
+				.then((entity) => {
+					get().setUserMessages(entity.data);
+					console.log(entity);
+				});
 		},
 		postMessage(date, content, user_ID, conversation_ID) {
 			return fetch(`http://localhost:4000/messages`, {
