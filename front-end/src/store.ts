@@ -118,8 +118,8 @@ type Store = {
   setMessages: (messages: Message[]) => void;
   appointments: Appointment[] | null;
   setAppointments: (appointments: Appointment[]) => void;
-  serviceName: string[] | null;
-  setServiceName: (serviceName: string[]) => void;
+  serviceName?: string[] | [] ;
+  setServiceName: (serviceName: string[] | []) => void;
   messageField: string;
   setMessageField: (message: string) => void;
   postMessage: (
@@ -164,7 +164,7 @@ const useStore = create<Store>(
     setAppointments: (appointments) => set({ appointments: appointments }),
     loggedinUser: null,
     setLoggedinUser: (loggedinUser) => set({ loggedinUser: loggedinUser }),
-    serviceName: null,
+    serviceName: [],
     setServiceName: (serviceName) => set({ serviceName: serviceName }),
     messageField: "",
     setMessageField: (message) => set({ messageField: message }),
@@ -207,16 +207,28 @@ const useStore = create<Store>(
         .then((entity) => set({ reviews: entity.data }));
     },
     filterCounsellorsByService: () => {
-      const serviceName = get().serviceName;
       const counsellors = get().counsellors;
+      const serviceName = get().serviceName;
+      console.log("serviceName", serviceName);
+
       if (counsellors && serviceName) {
-        const filteredCounsellors = counsellors.filter(({ specialties }) =>
-          specialties.find((specialty) => serviceName.includes(specialty.name))
+        console.log("hey");
+
+        const filteredCounsellors : Counsellor[] = counsellors.filter(({ specialties }) =>
+          specialties.find((specialty) => serviceName.includes(specialty.name as never))
         );
+        console.log("counsellors", counsellors);
+        console.log("services", serviceName);
+        console.log("filtered", filteredCounsellors);
+        console.log("hello");
+
         return filteredCounsellors;
+      } else {
+        console.log("not working");
+        return counsellors;
       }
-      return null;
     },
+
     fetchMessagesByConversationId(conversation_ID) {
       fetch(`http://localhost:4000/messages/conversation/${conversation_ID}`);
     },
