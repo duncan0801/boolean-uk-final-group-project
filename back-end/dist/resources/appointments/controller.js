@@ -53,7 +53,6 @@ const updateAppointment = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.updateAppointment = updateAppointment;
 const addAppointment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newAppointment = req.body;
-    console.log(newAppointment);
     try {
         const ifExcit = yield dbClient_1.default.appointment.findUnique({
             where: {
@@ -70,7 +69,7 @@ const addAppointment = (req, res) => __awaiter(void 0, void 0, void 0, function*
             res.json({ data: created });
         }
         else {
-            res.json({ msg: "PLease choose different time.." });
+            res.status(403).json({ msg: "PLease choose different time.." });
         }
     }
     catch (error) {
