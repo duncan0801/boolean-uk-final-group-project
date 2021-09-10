@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
+import useStore from '../store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,24 +60,47 @@ const services = [
       "Trauma",
   ]
 
-  function getStylesForServices(name: string, serviceName: string[], theme: Theme) {
-    return {
-      fontWeight:
-        serviceName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
+//   function getStylesForServices(name: string, theme: Theme, serviceName?: string[]|string ) {
+//       if (serviceName) {
+//         return {
+//           fontWeight:
+//         serviceName.indexOf(name) === -1
+//           ? theme.typography.fontWeightRegular
+//           : theme.typography.fontWeightMedium
+//         }
+//     };
+  
+// }
 
 
 function ServiceFilter() {
+    // const [serviceName, setServiceName] = React.useState<string[]>([]);
+    const counsellorsByService = useStore((state) => state.filterCounsellorsByService)
+    const counsellors = useStore((state) => state.counsellors)
+    const serviceName = useStore((state) => state.serviceName)
+    const setServiceName = useStore((state) => state.setServiceName)
+
+
     const classes = useStyles();
     const theme = useTheme();
-    const [serviceName, setServiceName] = React.useState<string[]>([]);
+
+    // console.log("ServiceFilter serviceName", serviceName)
+
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setServiceName(event.target.value as string[]);
+      setServiceName(event.target.value as string[]);
+
+      const filteredCounsellers = counsellorsByService()
+      console.log("filtered", filteredCounsellers)
+      return filteredCounsellers
+
     };
+
+
+    // console.log("counsellors", counsellors);
+    // console.log("selected services", serviceName);
+
+    // console.log("services", filteredCounsellers);
 
     return(<FormControl className={classes.formControl}>
         <InputLabel id="demo-mutiple-chip-label">Services</InputLabel>
@@ -97,7 +121,8 @@ function ServiceFilter() {
           MenuProps={MenuProps}
         >
           {services.map((service) => (
-            <MenuItem key={service} value={service} style={getStylesForServices(service, serviceName, theme)}>
+            <MenuItem key={service} value={service} 
+            >
               {service}
             </MenuItem>
           ))}
