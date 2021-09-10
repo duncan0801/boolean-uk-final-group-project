@@ -98,7 +98,6 @@ export type LoggedinUser = {
 };
 
 type Store = {
-
 	faqs: Faq[] | null;
 	setFaqs: (faqs: Faq[]) => void;
 	services: Service[] | null;
@@ -133,21 +132,18 @@ type Store = {
 	) => Promise<unknown>;
 	fetchMessagesByConversationId: (conversation_ID: number) => void;
 
-
-
-  fetchFaqs: () => void;
-  fetchServices: () => void;
-  fetchCounsellors: () => void;
-  fetchCounsellorById: (id: string) => void;
-  fetchUser: (loggedinUser: LoggedinUser) => void;
-  fetchLanguages: () => void;
-  fetchReviews: () => void;
-  filterCounsellorsByService: () => Counsellor[] | null;
-  onDelete: (appointment: Appointment) => Promise<Appointment[] | void>;
+	fetchFaqs: () => void;
+	fetchServices: () => void;
+	fetchCounsellors: () => void;
+	fetchCounsellorById: (id: string) => void;
+	fetchUser: (loggedinUser: LoggedinUser) => void;
+	fetchLanguages: () => void;
+	fetchReviews: () => void;
+	filterCounsellorsByService: () => Counsellor[] | null;
+	onDelete: (appointment: Appointment) => Promise<Appointment[] | void>;
 };
 
 const useStore = create<Store>(
-
 	devtools((set, get) => ({
 		faqs: null,
 		setFaqs: (faqs) => set({ faqs: faqs }),
@@ -176,107 +172,126 @@ const useStore = create<Store>(
 		userMessages: null,
 		setUserMessages: (messages) => set({ userMessages: messages }),
 
+		fetchFaqs: () => {
+			fetch("http://localhost:4000/faq")
+				.then((res) => res.json())
+				.then((entity) => set({ faqs: entity.data }));
+		},
+		fetchServices: () => {
+			fetch("http://localhost:4000/services", { credentials: "include" })
+				.then((res) => res.json())
+				.then((entity) => set({ services: entity.data }));
+		},
+		fetchCounsellors: () => {
+			fetch("http://localhost:4000/counsellors")
+				.then((res) => res.json())
+				.then((entity) => set({ counsellors: entity.data }));
+		},
+		fetchCounsellorById: (id) => {
+			fetch(`http://localhost:4000/counsellors/${id}`)
+				.then((res) => res.json())
+				.then((counsellor) => set({ counsellor: counsellor.data }));
+		},
+		fetchUser: (loggedinUser) => {
+			fetch(`http://localhost:4000/user/${loggedinUser.id}`, {
+				credentials: "include",
+			})
+				.then((res) => res.json())
+				.then((entity) => set({ user: entity.data }));
+		},
+		fetchLanguages: () => {
+			fetch("http://localhost:4000/languages")
+				.then((res) => res.json())
+				.then((entity) => set({ languages: entity.data }));
+		},
+		fetchReviews: () => {
+			fetch("http://localhost:4000/reviews", { credentials: "include" })
+				.then((res) => res.json())
+				.then((entity) => set({ reviews: entity.data }));
+		},
+		filterCounsellorsByService: () => {
+			const counsellors = get().counsellors;
+			const serviceName = get().serviceName;
+			console.log("serviceName", serviceName);
 
-    fetchFaqs: () => {
-      fetch("http://localhost:4000/faq")
-        .then((res) => res.json())
-        .then((entity) => set({ faqs: entity.data }));
-    },
-    fetchServices: () => {
-      fetch("http://localhost:4000/services", { credentials: "include" })
-        .then((res) => res.json())
-        .then((entity) => set({ services: entity.data }));
-    },
-    fetchCounsellors: () => {
-      fetch("http://localhost:4000/counsellors")
-        .then((res) => res.json())
-        .then((entity) => set({ counsellors: entity.data }));
-    },
-    fetchCounsellorById: (id) => {
-      fetch(`http://localhost:4000/counsellors/${id}`)
-        .then((res) => res.json())
-        .then((counsellor) => set({ counsellor: counsellor.data }));
-    },
-    fetchUser: (loggedinUser) => {
-      fetch(`http://localhost:4000/user/${loggedinUser.id}`, {
-        credentials: "include",
-      })
-        .then((res) => res.json())
-        .then((entity) => set({ user: entity.data }));
-    },
-    fetchLanguages: () => {
-      fetch("http://localhost:4000/languages")
-        .then((res) => res.json())
-        .then((entity) => set({ languages: entity.data }));
-    },
-    fetchReviews: () => {
-      fetch("http://localhost:4000/reviews", { credentials: "include" })
-        .then((res) => res.json())
-        .then((entity) => set({ reviews: entity.data }));
-    },
-    filterCounsellorsByService: () => {
-      const counsellors = get().counsellors;
-      const serviceName = get().serviceName;
-      console.log("serviceName", serviceName);
+			if (counsellors && serviceName) {
+				console.log("hey");
 
-      if (counsellors && serviceName) {
-        console.log("hey");
+				const filteredCounsellors: Counsellor[] = counsellors.filter(
+					({ specialties }) =>
+						specialties.find((specialty) =>
+							serviceName.includes(specialty.name as never)
+						)
+				);
+				console.log("counsellors", counsellors);
+				console.log("services", serviceName);
+				console.log("filtered", filteredCounsellors);
+				console.log("hello");
 
-        const filteredCounsellors : Counsellor[] = counsellors.filter(({ specialties }) =>
-          specialties.find((specialty) => serviceName.includes(specialty.name as never))
-        );
-        console.log("counsellors", counsellors);
-        console.log("services", serviceName);
-        console.log("filtered", filteredCounsellors);
-        console.log("hello");
+				return filteredCounsellors;
+			} else {
+				console.log("not working");
+				return counsellors;
+			}
+		},
 
-        return filteredCounsellors;
-      } else {
-        console.log("not working");
-        return counsellors;
-      }
-    },
+		fetchMessagesByConversationId(conversation_ID) {
+			fetch(
+				`http://localhost:4000/messages/conversation/${conversation_ID}`
+			);
+		},
+		postMessage(date, content, user_ID, conversation_ID) {
+			return fetch(`http://localhost:4000/messages`, {
+				credentials: "include",
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					date,
+					content,
+					user_ID,
+					conversation_ID,
+				}),
+			})
+				.then((res) => res.json())
+				.then((entity) => {
+					const userMessages = get().userMessages;
+					const setUserMessages = get().setUserMessages;
+					if (entity.data) {
+						userMessages
+							? setUserMessages([...userMessages, entity.data])
+							: setUserMessages([entity.data]);
+					}
+				});
+		},
 
-    fetchMessagesByConversationId(conversation_ID) {
-      fetch(`http://localhost:4000/messages/conversation/${conversation_ID}`);
-    },
-    postMessage(date, content, user_ID, counsellor_ID, conversation_ID) {
-      fetch(`http://localhost:4000/messages`, {
-        credentials: "include",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          date,
-          content,
-          user_ID,
-          counsellor_ID,
-          conversation_ID,
-        }),
-      }).then((res) => res.json());
-    },
-
-    onDelete(appointment: Appointment) {
-      return fetch(`http://localhost:4000/appointments/${appointment.id}`, {
-        credentials: "include",
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then(() => {
-          const user = get().user;
-          let updatedAppointments = user?.appointments?.filter(
-            (app) => app.id !== appointment.id
-          );
-          if (user) {
-            get().setUser({ ...user, appointments: updatedAppointments });
-          }
-        });
-    },
-  }))
+		onDelete(appointment: Appointment) {
+			return fetch(
+				`http://localhost:4000/appointments/${appointment.id}`,
+				{
+					credentials: "include",
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			)
+				.then((res) => res.json())
+				.then(() => {
+					const user = get().user;
+					let updatedAppointments = user?.appointments?.filter(
+						(app) => app.id !== appointment.id
+					);
+					if (user) {
+						get().setUser({
+							...user,
+							appointments: updatedAppointments,
+						});
+					}
+				});
+		},
+	}))
 );
 
 export default useStore;
