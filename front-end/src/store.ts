@@ -118,7 +118,7 @@ type Store = {
 	setMessages: (messages: Message[]) => void;
 	appointments: Appointment[] | null;
 	setAppointments: (appointments: Appointment[]) => void;
-	serviceName: string[] | null;
+	serviceName: string[] | [];
 	setServiceName: (serviceName: string[]) => void;
 	messageField: string;
 	setMessageField: (message: string) => void;
@@ -165,7 +165,7 @@ const useStore = create<Store>(
 		setAppointments: (appointments) => set({ appointments: appointments }),
 		loggedinUser: null,
 		setLoggedinUser: (loggedinUser) => set({ loggedinUser: loggedinUser }),
-		serviceName: null,
+		serviceName: [],
 		setServiceName: (serviceName) => set({ serviceName: serviceName }),
 		messageField: "",
 		setMessageField: (message) => set({ messageField: message }),
