@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import Banner from "../components/Banner";
+import FooterComponent from "../components/FooterComponent";
 import useStore from "../store";
 import "../styles/faq.css";
 
@@ -49,6 +50,7 @@ function FAQ() {
           })}
         </ul>
       </section>
+      <FooterComponent />
     </>
   );
 }

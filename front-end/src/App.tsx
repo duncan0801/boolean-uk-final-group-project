@@ -12,7 +12,7 @@ import Header from "./components/Header";
 import Signup from "./pages/Signup";
 import Counsellors from "./pages/Counsellors";
 import SingleCounsellor from "./pages/SingleCounsellor";
-import Appointments from "./pages/Appointments"
+import Appointments from "./pages/Appointments";
 import User from "./pages/User";
 import Chat from "./pages/Chat";
 import Reviews from "./pages/Reviews";
@@ -20,7 +20,6 @@ import FAQ from "./pages/FAQ";
 import useStore from "./store";
 import AddReview from "./pages/AddReview";
 import AppointmentSuccess from "./pages/AppointmentSuccess";
-import FooterComponent from "./components/FooterComponent";
 
 function App() {
   const loggedinUser = useStore((state) => state.loggedinUser);
@@ -75,7 +74,6 @@ function App() {
           </Route>
         </Switch>
       </main>
-      <FooterComponent/>
     </div>
   );
 }

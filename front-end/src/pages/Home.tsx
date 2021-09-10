@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Banner from "../components/Banner";
+import FooterComponent from "../components/FooterComponent";
 import useStore from "../store";
 import "../styles/home.css";
 
@@ -186,6 +187,7 @@ function Home() {
           <img src="front-end\public\pictures\choosing.svg" alt="" />
         </section>
       </div>
+      <FooterComponent />
     </>
   );
 }

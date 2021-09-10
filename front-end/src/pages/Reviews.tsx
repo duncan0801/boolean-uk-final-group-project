@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Banner from "../components/Banner";
+import FooterComponent from "../components/FooterComponent";
 import useStore from "../store";
 import "../styles/review.css";
 
@@ -76,6 +77,7 @@ function Reviews() {
           </div>
         ))}
       </div>
+      <FooterComponent />
     </section>
   );
 }
