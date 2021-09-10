@@ -25,6 +25,7 @@ function Appointments() {
   const [time, setTime] = useState("");
   const loggedinUser = useStore((state) => state.loggedinUser);
   const user = useStore((state) => state.user);
+  const setUser = useStore((state) => state.setUser);
 
   const { id }: { id: string } = useParams();
   const counsellorId = Number(id);
@@ -64,18 +65,6 @@ function Appointments() {
         );
       })
       .catch((error) => alert("Please choose different time.."));
-
-    // fetch(`http://localhost:4000/user/${user?.id}`, {
-    //   credentials: "include",
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     ...user,
-    //     counsellor_ID: counsellorId,
-    //   }),
-    // }).then((res) => res.json());
   }
 
   return (
