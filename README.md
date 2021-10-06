@@ -4,7 +4,7 @@
  
  ![Screen Shot 2021-10-06 at 10 08 17](https://user-images.githubusercontent.com/52134584/136173894-4328f579-e976-4a33-b972-610425715f92.png)
  
- Visit the site: https://distracted-sammet-a52dfe.netlify.app/home
+ Visit the site: https://distracted-sammet-a52dfe.netlify.app/
  
  We decided to do an appointments system app, and felt online counselling was a valuable and useful tool. Below are the wireframes we used to design and plan the app.
  
