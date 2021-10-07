@@ -10,9 +10,7 @@
  
 ![Screen Shot 2021-10-06 at 10 11 13](https://user-images.githubusercontent.com/52134584/136174334-a00c97c2-164e-4edf-adc2-3e44bd024ff3.png)
 
-## Improvements
-Improved filtering functionality
+I think we would improve the filtering functionality.
 
-## Upcoming features
-Add a counsellor log in where counsellors can view there appointments and send messages to users
+In futre we would like to add a counsellor log in where counsellors can view there appointments and send messages to users
 
